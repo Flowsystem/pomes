@@ -6,7 +6,7 @@
   "typings": "./index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/APSL/redux-i18n"
+    "url": "https://github.com/Flowsystem/redux-i18n"
   },
   "scripts": {
     "build": "babel src --out-dir dist",
@@ -32,9 +32,9 @@
     "po",
     "internationalize"
   ],
-  "author": "Apsl <info@apsl.net> (https://www.apsl.net)",
+  "author": "Oneflow <assets@oneflow.com> (https://www.oneflow.com)",
   "license": "MIT",
-  "homepage": "https://github.com/APSL/redux-i18n",
+  "homepage": "https://github.com/Flowsystem/redux-i18n",
   "bin": {
     "i18n_extract": "./bin/i18n_extract.js",
     "i18n_import": "./bin/i18n_import.js"

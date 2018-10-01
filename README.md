@@ -2,7 +2,7 @@
 
 **redux-i18n** is a simple yet powerful package to translate your *react* applications using *react-redux*.
 
-[![redux-i18n in Travis](https://travis-ci.org/APSL/redux-i18n.svg?branch=master)](https://travis-ci.org/APSL/redux-i18n)
+[![Build Status](https://travis-ci.org/Flowsystem/redux-i18n.svg?branch=master)](https://travis-ci.org/Flowsystem/redux-i18n)
 [![npm version](https://badge.fury.io/js/redux-i18n.svg)](https://www.npmjs.com/package/redux-i18n)
 ![downloads](https://img.shields.io/npm/dm/redux-i18n.svg)
 
@@ -12,7 +12,7 @@
 npm i redux-i18n --save
 ```
 
-or 
+or
 
 ```
 yarn add redux-i18n
@@ -59,7 +59,7 @@ The `t()` function takes up to three arguments `t(textKey [, params, comments])`
 
 For setting the language in the redux store **redux-i18n** offers an action creator `setLanguage`.
 
-To manage the translations in your React app, **redux-i18n** supports two choices: 
+To manage the translations in your React app, **redux-i18n** supports two choices:
 
 1. load all your translations into a one big JS object
 1. load your translations into a slice of your redux store
@@ -76,7 +76,7 @@ Finally, **redux-i18n** offers scripts to generate a translations object from po
 The package provides a parent component to encapsulate your application as well as helpers functions to translate your project.
 
 ```javascript
-// import ... 
+// import ...
 import I18n from "redux-i18n"
 // with Immutable.js:
 import I18n from "redux-i18n/immutable"
@@ -419,8 +419,8 @@ npm run import
 ```
 
 This script read all *po* files inside your *locales* folder, extract all translations and build a **src/translations.js** that you can then use in your project.
- 
-Your *.po* files must define header language, check [mininal format](https://gist.github.com/Salec/3ddcf037e9cc4c44082441f379bf0165) for more information. 
+
+Your *.po* files must define header language, check [mininal format](https://gist.github.com/Salec/3ddcf037e9cc4c44082441f379bf0165) for more information.
 
 You can also set another *locales* folder:
 
