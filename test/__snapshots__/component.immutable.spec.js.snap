@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`immutable component test initial state 1`] = `
+Immutable.Map {
+  "lang": "en",
+  "translations": Object {},
+  "forceRefresh": false,
+}
+`;

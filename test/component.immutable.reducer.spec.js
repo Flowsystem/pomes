@@ -1,120 +1,162 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import TestUtils from 'react-dom/test-utils'
-import {describe, before, it} from 'mocha'
-import expect from 'expect'
-import {createStore, applyMiddleware} from 'redux'
-import {combineReducers} from 'redux-immutablejs'
-import thunk from 'redux-thunk'
-import {Provider} from 'react-redux'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-dom/test-utils';
+import { createStore, applyMiddleware } from 'redux';
+import { combineReducers } from 'redux-immutablejs';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
 
-import I18n from '../immutable'
-import {i18nState} from '../immutable'
-import {setLanguage, setTranslations} from '../dist/actions'
+import I18n from '../immutable';
+import { i18nState } from '../immutable';
+import { setLanguage, setTranslations } from '../dist/actions';
 
-import TransWithoutParams from './components/TransWithoutParams'
+import TransWithoutParams from './components/TransWithoutParams';
 
-describe('translations in reducer (immutable)', function() {
-  before('rendering component', function() {
-    this.store = createStore(
-      combineReducers({i18nState}),
-      applyMiddleware(thunk)
-    )
+describe('translations in reducer (immutable)', () => {
+  it('set all translations object', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
 
-    this.component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
-        <I18n translations={{}} useReducer={true}>
-          <TransWithoutParams/>
+    const component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <I18n translations={{}} useReducer>
+          <TransWithoutParams />
         </I18n>
-      </Provider>
-    ))
-
-  })
-
-  it('set all translations object', function() {
-    expect(this.store.getState().getIn(['i18nState', 'translations'])).toEqual({})
-    this.store.dispatch(setLanguage('es'))
-    expect(this.component.textContent).toEqual('Hello')
+      </Provider>,
+    ));
+    expect(store.getState().getIn(['i18nState', 'translations'])).toEqual({});
+    store.dispatch(setLanguage('es'));
+    expect(component.textContent).toEqual('Hello');
 
     const trans = {
-      'es': {
-        'Hello': 'Hola'
-      }
-    }
+      es: {
+        Hello: 'Hola',
+      },
+    };
 
-    this.store.dispatch(setTranslations(trans))
-    expect(this.store.getState().getIn(['i18nState', 'translations'])['es']['Hello']).toEqual('Hola')
-    expect(this.component.textContent).toEqual('Hola')
-  })
+    store.dispatch(setTranslations(trans));
+    expect(store.getState().getIn(['i18nState', 'translations']).es.Hello).toEqual('Hola');
+    expect(component.textContent).toEqual('Hola');
+  });
 
-  it('add only one new language in translations', function() {
+  it('add only one new language in translations', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+
+    const component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <I18n translations={{}} useReducer>
+          <TransWithoutParams />
+        </I18n>
+      </Provider>,
+    ));
     const trans = {
-      'es': {
-        'Hello': 'Hola'
-      }
-    }
-    this.store.dispatch(setTranslations(trans))
-    expect(this.store.getState().getIn(['i18nState', 'translations'])).toEqual(trans)
-    this.store.dispatch(setLanguage('es'))
-    expect(this.component.textContent).toEqual('Hola')
+      es: {
+        Hello: 'Hola',
+      },
+    };
+    store.dispatch(setTranslations(trans));
+    expect(store.getState().getIn(['i18nState', 'translations'])).toEqual(trans);
+    store.dispatch(setLanguage('es'));
+    expect(component.textContent).toEqual('Hola');
 
-    this.store.dispatch(setLanguage('de'))
-    expect(this.component.textContent).toEqual('Hello')
+    store.dispatch(setLanguage('de'));
+    expect(component.textContent).toEqual('Hello');
 
-    this.store.dispatch(setTranslations({'Hello': 'Hallo'}, 'de'))
-    expect(this.component.textContent).toEqual('Hallo')
-  })
+    store.dispatch(setTranslations({ Hello: 'Hallo' }, 'de'));
+    expect(component.textContent).toEqual('Hallo');
+  });
 
-  describe('options', function() {
-    it('add only one new language in translations', function() {
+  describe('options', () => {
+    it('add only one new language in translations', () => {
+      const store = createStore(
+        combineReducers({ i18nState }),
+        applyMiddleware(thunk),
+      );
+
+      const component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+        <Provider store={store}>
+          <I18n translations={{}} useReducer>
+            <TransWithoutParams />
+          </I18n>
+        </Provider>,
+      ));
       const trans = {
-        'es': {
-          'Hello': 'Hola'
-        }
-      }
-      this.store.dispatch(setTranslations(trans))
-      this.store.dispatch(setLanguage('de'))
-      this.store.dispatch(setTranslations({'Hello': 'Hallo'}, {language: 'de'}))
-      expect(this.component.textContent).toEqual('Hallo')
-    });
-    
-    it('preserve existing translations', function() {
-      const trans = {
-        'es': {
-          'Hello': 'Hola'
-        }
-      }
-
-      const newTranslations = {
-        'de': {
-          'Hello': 'Hallo'
-        }
-      }
-      this.store.dispatch(setTranslations(trans))
-      this.store.dispatch(setTranslations(newTranslations, {preserveExisting: true}))
-      this.store.dispatch(setLanguage('es'))
-      expect(this.component.textContent).toEqual('Hola')
-      this.store.dispatch(setLanguage('de'))
-      expect(this.component.textContent).toEqual('Hallo')
+        es: {
+          Hello: 'Hola',
+        },
+      };
+      store.dispatch(setTranslations(trans));
+      store.dispatch(setLanguage('de'));
+      store.dispatch(setTranslations({ Hello: 'Hallo' }, { language: 'de' }));
+      expect(component.textContent).toEqual('Hallo');
     });
 
-    it('preserve translations in only one language', function() {
+    it('preserve existing translations', () => {
+      const store = createStore(
+        combineReducers({ i18nState }),
+        applyMiddleware(thunk),
+      );
+
+      const component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+        <Provider store={store}>
+          <I18n translations={{}} useReducer>
+            <TransWithoutParams />
+          </I18n>
+        </Provider>,
+      ));
       const trans = {
-        'es': {
-          'Hello': 'Hola'
-        }
-      }
+        es: {
+          Hello: 'Hola',
+        },
+      };
 
       const newTranslations = {
-        'Goodbye': 'Adiós'
-      }
+        de: {
+          Hello: 'Hallo',
+        },
+      };
+      store.dispatch(setTranslations(trans));
+      store.dispatch(setTranslations(newTranslations, { preserveExisting: true }));
+      store.dispatch(setLanguage('es'));
+      expect(component.textContent).toEqual('Hola');
+      store.dispatch(setLanguage('de'));
+      expect(component.textContent).toEqual('Hallo');
+    });
 
-      this.store.dispatch(setTranslations(trans))
-      this.store.dispatch(setTranslations(newTranslations, {language: 'es', preserveExisting: true}))
-      expect(this.store.getState().getIn(['i18nState', 'translations'])['es']).toEqual({
-        'Hello': 'Hola',
-        'Goodbye': 'Adiós'
-      })
-    })
-  })
-})
+    it('preserve translations in only one language', () => {
+      const store = createStore(
+        combineReducers({ i18nState }),
+        applyMiddleware(thunk),
+      );
+
+      const component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+        <Provider store={store}>
+          <I18n translations={{}} useReducer>
+            <TransWithoutParams />
+          </I18n>
+        </Provider>,
+      ));
+      const trans = {
+        es: {
+          Hello: 'Hola',
+        },
+      };
+
+      const newTranslations = {
+        Goodbye: 'Adiós',
+      };
+
+      store.dispatch(setTranslations(trans));
+      store.dispatch(setTranslations(newTranslations, { language: 'es', preserveExisting: true }));
+      expect(store.getState().getIn(['i18nState', 'translations']).es).toEqual({
+        Hello: 'Hola',
+        Goodbye: 'Adiós',
+      });
+    });
+  });
+});

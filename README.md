@@ -3,6 +3,7 @@
 **redux-i18n** is a simple yet powerful package to translate your *react* applications using *react-redux*.
 
 [![Build Status](https://travis-ci.org/Flowsystem/redux-i18n.svg?branch=master)](https://travis-ci.org/Flowsystem/redux-i18n)
+[![codecov](https://codecov.io/gh/Flowsystem/redux-i18n/branch/master/graph/badge.svg)](https://codecov.io/gh/Flowsystem/redux-i18n)
 [![npm version](https://badge.fury.io/js/redux-i18n.svg)](https://www.npmjs.com/package/redux-i18n)
 ![downloads](https://img.shields.io/npm/dm/redux-i18n.svg)
 

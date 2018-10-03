@@ -1,175 +1,243 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import expect from 'expect'
-import {describe, it, before} from 'mocha'
-import {createStore, applyMiddleware} from 'redux'
-import {combineReducers} from 'redux-immutablejs'
-import thunk from 'redux-thunk'
-import TestUtils from 'react-dom/test-utils'
-import {Provider} from 'react-redux'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware } from 'redux';
+import { combineReducers } from 'redux-immutablejs';
+import thunk from 'redux-thunk';
+import TestUtils from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
 
-import I18n from '../immutable'
-import {i18nState} from '../immutable'
-import {setLanguage} from '../dist/actions'
-import TransWithoutParams from './components/TransWithoutParams'
-import TransWithParams from './components/TransWithParams'
-import TransWithDollarSignParams from './components/TransWithDollarSignParams'
-import TransWithNumberParams from './components/TransWithNumberParams'
-import Dates from './components/Dates'
-import {TransPluralize1, TransPluralize2} from './components/TransPlurals'
-import TransWithObjParams from './components/TransWithObjParams'
+import I18n from '../immutable';
+import { i18nState } from '../immutable';
+import { setLanguage } from '../dist/actions';
+import TransWithoutParams from './components/TransWithoutParams';
+import TransWithParams from './components/TransWithParams';
+import TransWithDollarSignParams from './components/TransWithDollarSignParams';
+import TransWithNumberParams from './components/TransWithNumberParams';
+import Dates from './components/Dates';
+import { TransPluralize1, TransPluralize2 } from './components/TransPlurals';
+import TransWithObjParams from './components/TransWithObjParams';
 
 const translations = {
-  'es': {
-    'Hello': 'Hola',
+  es: {
+    Hello: 'Hola',
     'Hello {name}!': 'Hola {name}!',
-    'YYYY-MM-DD': 'DD/MM/YYYY'
+    'YYYY-MM-DD': 'DD/MM/YYYY',
   },
-  'en': {
+  en: {
     'una noche': 'one night',
-    '{n} noches': '{n} nights'
+    '{n} noches': '{n} nights',
   },
   'de-DE': {
-    'Hello': 'Hallo'
-  }
-}
+    Hello: 'Hallo',
+  },
+};
 
-describe('immutable component test', function() {
-  before('prepare store and component', function() {
+describe('immutable component test', () => {
+  it('initial state', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
 
-    this.store = createStore(
-      combineReducers({i18nState}),
-      applyMiddleware(thunk)
-    )
+    expect(store.getState().get('i18nState')).toMatchSnapshot();
+    expect(store.getState().getIn(['i18nState', 'lang'])).toEqual('en');
+  });
 
-    this.withoutParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+  it('text without params', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withoutParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations}>
-          <TransWithoutParams/>
+          <TransWithoutParams />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    ));
 
-    this.withParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+    expect(withoutParamsNode.textContent).toEqual('Hello');
+  });
+
+  it('changing language in text without params', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withoutParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations}>
-          <TransWithParams/>
+          <TransWithoutParams />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    ));
 
-    this.withDollarSignParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+    store.dispatch(setLanguage('es'));
+    expect(withoutParamsNode.textContent).toEqual('Hola');
+  });
+
+  it('text with params', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations}>
-          <TransWithDollarSignParams/>
+          <TransWithParams />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    ));
 
-    this.withNumberParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+    store.dispatch(setLanguage('en'));
+    expect(withParamsNode.textContent).toEqual('Hello Francesc!');
+  });
+
+  it('text with dollar signs', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withDollarSignParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations}>
-          <TransWithNumberParams/>
+          <TransWithDollarSignParams />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    ));
 
-    this.dates = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+    expect(withDollarSignParamsNode.textContent).toEqual('We should have two dollar signs $$!');
+  });
+
+  it('text with number params', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withNumberParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations}>
-          <Dates/>
+          <TransWithNumberParams />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    ));
 
-    this.pluralize1 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+    expect(withNumberParamsNode.textContent).toEqual('13 things!');
+  });
+
+  it('changing language in text with params', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations}>
-          <TransPluralize1/>
+          <TransWithParams />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    ));
 
-    this.pluralize2 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+    store.dispatch(setLanguage('es'));
+    expect(withParamsNode.textContent).toEqual('Hola Francesc!');
+  });
+
+  it('date format', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const dates = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations}>
-          <TransPluralize2/>
+          <Dates />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    ));
 
-    this.objAsParam = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+    store.dispatch(setLanguage('en'));
+    expect(dates.textContent).toEqual('2016-01-01');
+    store.dispatch(setLanguage('es'));
+    expect(dates.textContent).toEqual('01/01/2016');
+  });
+
+  it('pluralize', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const pluralize1 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations}>
-          <TransWithObjParams/>
+          <TransPluralize1 />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    ));
+    const pluralize2 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <I18n translations={translations}>
+          <TransPluralize2 />
+        </I18n>
+      </Provider>,
+    ));
 
-  })
+    store.dispatch(setLanguage('es'));
+    expect(pluralize1.textContent).toEqual('una noche');
+    expect(pluralize2.textContent).toEqual('5 noches');
+    store.dispatch(setLanguage('en'));
+    expect(pluralize1.textContent).toEqual('one night');
+    expect(pluralize2.textContent).toEqual('5 nights');
+  });
 
-  it('initial state', function() {
-    expect(this.store.getState().get('i18nState')).toExist()
-    expect(this.store.getState().getIn(['i18nState', 'lang'])).toEqual('en')
-  })
+  it('de-DE', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withoutParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <I18n translations={translations}>
+          <TransWithoutParams />
+        </I18n>
+      </Provider>,
+    ));
 
-  it('text without params', function() {
-    expect(this.withoutParamsNode.textContent).toEqual('Hello')
-  })
+    store.dispatch(setLanguage('de-DE'));
+    expect(store.getState().getIn(['i18nState', 'lang'])).toEqual('de-DE');
+    expect(withoutParamsNode.textContent).toEqual('Hallo');
+  });
 
-  it('changing language in text without params', function() {
-    this.store.dispatch(setLanguage('es'))
-    expect(this.withoutParamsNode.textContent).toEqual('Hola')
-  })
+  it('fall back lang', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withoutParamsNode = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <I18n translations={translations}>
+          <TransWithoutParams />
+        </I18n>
+      </Provider>,
+    ));
 
-  it('text with params', function() {
-    this.store.dispatch(setLanguage('en'))
-    expect(this.withParamsNode.textContent).toEqual('Hello Francesc!')
-  })
+    store.dispatch(setLanguage('es-ES'));
+    expect(store.getState().getIn(['i18nState', 'lang'])).toEqual('es-ES');
+    expect(withoutParamsNode.textContent).toEqual('Hola');
+  });
 
-  it('text with dollar signs', function() {
-    expect(this.withDollarSignParamsNode.textContent).toEqual('We should have two dollar signs $$!')
-  })
+  it('object as param', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const objAsParam = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <I18n translations={translations}>
+          <TransWithObjParams />
+        </I18n>
+      </Provider>,
+    ));
 
-  it('text with number params', function() {
-    expect(this.withNumberParamsNode.textContent).toEqual('13 things!')
-  })
-
-  it('changing language in text with params', function() {
-    this.store.dispatch(setLanguage('es'))
-    expect(this.withParamsNode.textContent).toEqual('Hola Francesc!')
-  })
-
-  it('date format', function() {
-    this.store.dispatch(setLanguage('en'))
-    expect(this.dates.textContent).toEqual('2016-01-01')
-    this.store.dispatch(setLanguage('es'))
-    expect(this.dates.textContent).toEqual('01/01/2016')
-  })
-
-  it('pluralize', function() {
-    this.store.dispatch(setLanguage('es'))
-    expect(this.pluralize1.textContent).toEqual('una noche')
-    expect(this.pluralize2.textContent).toEqual('5 noches')
-    this.store.dispatch(setLanguage('en'))
-    expect(this.pluralize1.textContent).toEqual('one night')
-    expect(this.pluralize2.textContent).toEqual('5 nights')
-  })
-
-  it('de-DE', function() {
-    this.store.dispatch(setLanguage('de-DE'))
-    expect(this.store.getState().getIn(['i18nState', 'lang'])).toEqual('de-DE')
-    expect(this.withoutParamsNode.textContent).toEqual('Hallo')
-  })
-
-  it('fall back lang', function() {
-    this.store.dispatch(setLanguage('es-ES'))
-    expect(this.store.getState().getIn(['i18nState', 'lang'])).toEqual('es-ES')
-    expect(this.withoutParamsNode.textContent).toEqual('Hola')
-  })
-
-  it('object as param', function() {
-    expect(this.objAsParam.textContent).toEqual('Hello Cesc')
-  })
-
-})
+    expect(objAsParam.textContent).toEqual('Hello Cesc');
+  });
+});

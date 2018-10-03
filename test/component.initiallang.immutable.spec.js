@@ -1,52 +1,45 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import TestUtils from 'react-dom/test-utils'
-import {describe, before, it} from 'mocha'
-import expect from 'expect'
-import {createStore, applyMiddleware} from 'redux'
-import {combineReducers} from 'redux-immutablejs'
-import thunk from 'redux-thunk'
-import {Provider} from 'react-redux'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-dom/test-utils';
+import { createStore, applyMiddleware } from 'redux';
+import { combineReducers } from 'redux-immutablejs';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
 
-import I18n from '../immutable'
-import {i18nState} from '../immutable'
+import I18n from '../immutable';
+import { i18nState } from '../immutable';
 
-import TransWithoutParams from './components/TransWithoutParams'
+import TransWithoutParams from './components/TransWithoutParams';
 
 const translations = {
-  'es': {
-    'Hello': 'Hola',
+  es: {
+    Hello: 'Hola',
     'Hello {name}!': 'Hola {name}!',
-    'YYYY-MM-DD': 'DD/MM/YYYY'
+    'YYYY-MM-DD': 'DD/MM/YYYY',
   },
-  'en': {
+  en: {
     'una noche': 'one night',
-    '{n} noches': '{n} nights'
+    '{n} noches': '{n} nights',
   },
   'de-DE': {
-    'Hello': 'Hallo'
-  }
-}
+    Hello: 'Hallo',
+  },
+};
 
-describe('initial language (immutable)', function() {
-  before('rendering component', function() {
-    this.store = createStore(
-      combineReducers({i18nState}),
-      applyMiddleware(thunk)
-    )
-
-    this.component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={this.store}>
+describe('initial language (immutable)', () => {
+  it('checking language', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    TestUtils.renderIntoDocument(
+      <Provider store={store}>
         <I18n translations={translations} initialLang="es">
-          <TransWithoutParams/>
+          <TransWithoutParams />
         </I18n>
-      </Provider>
-    ))
+      </Provider>,
+    );
 
-  })
-
-  it('checking language', function() {
-    expect(this.store.getState().getIn(['i18nState', 'lang'])).toEqual('es')
-  })
-
-})
+    expect(store.getState().getIn(['i18nState', 'lang'])).toEqual('es');
+  });
+});

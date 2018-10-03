@@ -1,32 +1,34 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux"
+import { connect } from 'react-redux';
 
-import { setLanguage } from "redux-i18n"
+import { setLanguage } from 'redux-i18n';
 
 class Main extends React.Component {
   constructor(props) {
-    super(props)
-    this.languages = ["es", "en", "de-DE"]
+    super(props);
+    this.languages = ['es', 'en', 'de-DE'];
   }
 
   componentWillMount() {
-    this.props.dispatch(setLanguage("en"))
+    this.props.dispatch(setLanguage('en'));
   }
 
-  dispatchLanguage = e => {
-    this.props.dispatch(setLanguage(e.target.value))
+  dispatchLanguage = (e) => {
+    this.props.dispatch(setLanguage(e.target.value));
   }
 
   render() {
-    const user = { name: "World" }
-    const name = <b>{user.name}</b>
+    const user = { name: 'World' };
+    const name = <b>{user.name}</b>;
 
     return (
       <div>
         <h1>Translations Dict</h1>
-        Language: {this.props.lang}
+        Language:
+        {' '}
+        {this.props.lang}
         <br />
         Change language:
         <select value={this.props.lang} onChange={this.dispatchLanguage}>
@@ -37,23 +39,26 @@ class Main extends React.Component {
           ))}
         </select>
         <br />
-        Translation: {this.context.t("Hello world!")}
+        Translation:
+        {' '}
+        {this.context.t('Hello world!')}
         <br />
-        Translation 2:{" "}
+        Translation 2:
+        {' '}
         <span
           dangerouslySetInnerHTML={{
-            __html: this.context.t("Hello {name}!", { name: name })
+            __html: this.context.t('Hello {name}!', { name }),
           }}
         />
       </div>
-    )
+    );
   }
 }
 
 Main.contextTypes = {
-  t: PropTypes.func.isRequired
-}
+  t: PropTypes.func.isRequired,
+};
 
 export default connect(state => ({
-  lang: state.i18nState.lang
-}))(Main)
+  lang: state.i18nState.lang,
+}))(Main);

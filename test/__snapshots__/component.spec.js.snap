@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component test initial state 1`] = `
+Object {
+  "forceRefresh": false,
+  "lang": "en",
+  "translations": Object {},
+}
+`;

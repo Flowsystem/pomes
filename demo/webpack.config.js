@@ -1,5 +1,5 @@
-var path = require('path')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, 'src/app.js'),
@@ -7,11 +7,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist/'),
     filename: 'js/[name].js',
-    publicPath: '/'
+    publicPath: '/',
   },
   devServer: {
     publicPath: '/',
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -19,9 +19,9 @@ module.exports = {
       hash: false,
       inject: 'body',
       minify: {
-        collapseWhitespace: true
+        collapseWhitespace: true,
       },
-    })
+    }),
   ],
   module: {
     loaders: [{
@@ -30,10 +30,10 @@ module.exports = {
       loader: 'babel-loader',
       query: {
         presets: ['es2015', 'stage-2', 'react'],
-      }
-    }]
+      },
+    }],
   },
   resolve: {
-    extensions: ['.js']
-  }
-}
+    extensions: ['.js'],
+  },
+};
