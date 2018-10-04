@@ -1,5 +1,5 @@
 /*
- * Project: redux-i18n
+ * Project: pomes
  * File: getTranslateFunction.js
  */
 /* eslint-disable no-new-func */
