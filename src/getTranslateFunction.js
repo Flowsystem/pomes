@@ -57,9 +57,14 @@ export default (translations, lang, fallbackLang) => {
   const plural_number = parseInt(getOptionValue(translations.options, 'plural_number', '2'), 10);
 
   return (textKey, params, comment) => {
+
     // Checking if textkey contains a pluralize object.
     if (typeof textKey === 'object') {
       textKey = textKey[Number(new Function('n', `return ${plural_rule}`)(params[textKey[plural_number]]))];
+    }
+
+    if (typeof comment !== 'string' || !comment) {
+      console.warn(`Comment is mandatory for "${textKey}"`);
     }
 
     if (!langMessages && !fallbackLangMessages) {

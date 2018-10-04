@@ -2,9 +2,10 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 import hoistStatics from 'hoist-non-react-statics';
 import invariant from 'invariant';
+import Message from '../message';
+import Plural from '../plural';
 
-
-export default function localize(propName = 't') {
+export default function localize(propName = 'message', pluralPropName = 'plural') {
   return function wrapWithLocalized(WrappedComponent) {
     invariant(
       typeof WrappedComponent === 'function',
@@ -22,8 +23,17 @@ export default function localize(propName = 't') {
         this.t = context.t;
       }
 
+      message = messageObject => Message.translate(this.context, messageObject);
+
+      plural = messageObject => Plural.translate(this.context, messageObject);
+
       render() {
-        return createElement(WrappedComponent, { ...this.props, [propName]: this.t });
+        return createElement(WrappedComponent, {
+          ...this.props,
+          t: this.t,
+          [propName]: this.message,
+          [pluralPropName]: this.plural,
+        });
       }
     }
 

@@ -57,17 +57,41 @@ describe('hoc test', () => {
   });
 
   it('should allow you to set the prop name in the child component by passing an arg to localize', () => {
-    function translation() {}
-    const Container = localize('translate')(Passthrough);
-
+    const translation = jest.fn();
+    const Container = localize('singularMessageFunc', 'pluralMessageFunc')(Passthrough);
     const tree = TestUtils.renderIntoDocument(
       <ProviderMock t={translation}>
         <Container />
       </ProviderMock>,
     );
-
     const stub = TestUtils.findRenderedComponentWithType(tree, Passthrough);
-    expect(stub.props.t).toEqual(undefined);
-    expect(stub.props.translate).toEqual(translation);
+    const singularMessage = {
+      text: 'foo {bar}',
+      values: {
+        bar: 1,
+      },
+      comment: 'Foo',
+    };
+    const pluralMessage = {
+      texts: ['singular', 'plural'],
+      condition: 'count',
+      values: {
+        count: 1,
+      },
+      comment: 'Foo',
+    };
+    expect(stub.props.message).toBe(undefined);
+    expect(stub.props.plural).toBe(undefined);
+    expect(stub.props.t).toEqual(translation);
+
+    stub.props.singularMessageFunc(singularMessage);
+    expect(translation).toHaveBeenCalledTimes(1);
+    expect(translation).toHaveBeenCalledWith('foo {bar}', { bar: 1 }, 'Foo');
+
+    translation.mockReset();
+
+    stub.props.pluralMessageFunc(pluralMessage);
+    expect(translation).toHaveBeenCalledTimes(1);
+    expect(translation).toHaveBeenCalledWith(['singular', 'plural', 'count'], { count: 1 }, 'Foo');
   });
 });
