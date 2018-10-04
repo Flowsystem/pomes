@@ -1,4 +1,4 @@
-# Description
+# 🍎 Pomes
 
 **pomes** is a simple yet powerful package to translate your *react* applications using *react-redux*.
 
@@ -31,7 +31,7 @@ yarn add pomes
 
 ## Requirements
 
-* node >= 4.0.0
+* node >= 6.0.0
 
 ## Overview
 
