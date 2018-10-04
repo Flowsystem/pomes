@@ -1,22 +1,22 @@
-# Description
+# 🍎 Pomes
 
-**redux-i18n** is a simple yet powerful package to translate your *react* applications using *react-redux*.
+**pomes** is a simple yet powerful package to translate your *react* applications using *react-redux*.
 
-[![Build Status](https://travis-ci.org/Flowsystem/redux-i18n.svg?branch=master)](https://travis-ci.org/Flowsystem/redux-i18n)
-[![codecov](https://codecov.io/gh/Flowsystem/redux-i18n/branch/master/graph/badge.svg)](https://codecov.io/gh/Flowsystem/redux-i18n)
-[![npm version](https://badge.fury.io/js/redux-i18n.svg)](https://www.npmjs.com/package/redux-i18n)
-![downloads](https://img.shields.io/npm/dm/redux-i18n.svg)
+[![Build Status](https://travis-ci.org/Flowsystem/pomes.svg?branch=master)](https://travis-ci.org/Flowsystem/pomes)
+[![codecov](https://codecov.io/gh/Flowsystem/pomes/branch/master/graph/badge.svg)](https://codecov.io/gh/Flowsystem/pomes)
+[![npm version](https://badge.fury.io/js/pomes.svg)](https://www.npmjs.com/package/pomes)
+![downloads](https://img.shields.io/npm/dm/pomes.svg)
 
 ## Installation
 
 ```
-npm i redux-i18n --save
+npm i pomes --save
 ```
 
 or
 
 ```
-yarn add redux-i18n
+yarn add pomes
 ```
 
 ## Features
@@ -31,13 +31,13 @@ yarn add redux-i18n
 
 ## Requirements
 
-* node >= 4.0.0
+* node >= 6.0.0
 
 ## Overview
 
-**redux-i18n** offers your app the `t()` function to translate literals.
+**pomes** offers your app the `t()` function to translate literals.
 
-The `t()` function is available in the components of your app via React [context](https://reactjs.org/docs/context.html). To achieve this you need to wrap your app into the `<I18n />` component from **redux-i18n** that provides for the context. Furthermore, for all components that want to use the `t()` function you need to define `contextTypes`, e.g.:
+The `t()` function is available in the components of your app via React [context](https://reactjs.org/docs/context.html). To achieve this you need to wrap your app into the `<I18n />` component from **pomes** that provides for the context. Furthermore, for all components that want to use the `t()` function you need to define `contextTypes`, e.g.:
 
 ```javascript
 // import ...
@@ -58,18 +58,18 @@ If `contextTypes` is not defined, then context will be an empty object.
 
 The `t()` function takes up to three arguments `t(textKey [, params, comments])`, where `textKey` is either the string to be translated or --- for pluralization --- an object as defined below.
 
-For setting the language in the redux store **redux-i18n** offers an action creator `setLanguage`.
+For setting the language in the redux store **pomes** offers an action creator `setLanguage`.
 
-To manage the translations in your React app, **redux-i18n** supports two choices:
+To manage the translations in your React app, **pomes** supports two choices:
 
 1. load all your translations into a one big JS object
 1. load your translations into a slice of your redux store
 
-For the latter **redux-i18n** provides an action function creator `setTranslations`. As `setTranslations` is an action function creator you need to add *redux-thunk* to your middleware for it to work.
+For the latter **pomes** provides an action function creator `setTranslations`. As `setTranslations` is an action function creator you need to add *redux-thunk* to your middleware for it to work.
 
-**redux-i18n** supports your store in plain JavaScript structures, but also if it is managed by help of *immutable.js*.
+**pomes** supports your store in plain JavaScript structures, but also if it is managed by help of *immutable.js*.
 
-Finally, **redux-i18n** offers scripts to generate a translations object from po files that can be managed in [Poedit](https://poedit.net/).
+Finally, **pomes** offers scripts to generate a translations object from po files that can be managed in [Poedit](https://poedit.net/).
 
 
 ## Usage
@@ -78,9 +78,9 @@ The package provides a parent component to encapsulate your application as well 
 
 ```javascript
 // import ...
-import I18n from "redux-i18n"
+import I18n from "pomes"
 // with Immutable.js:
-import I18n from "redux-i18n/immutable"
+import I18n from "pomes/immutable"
 
 import {translations} from "./translations"
 
@@ -145,9 +145,9 @@ The language state is managed in a slice of the store named `i18nState`. Therefo
 ```javascript
 import {otherreducers} from "./Yourproject"
 
-import {i18nState} from "redux-i18n"
+import {i18nState} from "pomes"
 // with Immutable.js:
-import {i18nState} from "redux-i18n/immutable"
+import {i18nState} from "pomes/immutable"
 
 const appReducer = combineReducers({
   otherreducers,
@@ -317,7 +317,7 @@ When the translations are generated from po import file, this node is created au
 Use the *setLanguage* action.
 
 ```javascript
-import {setLanguage} from "redux-i18n"
+import {setLanguage} from "pomes"
 
 componentWillMount() {
   this.props.dispatch(setLanguage("es"))
@@ -337,11 +337,11 @@ export const translations = {
 }
 ```
 
-...*redux-i18n* will fallback on the closest property. In this case, `"es"` or `"en"`.
+...*pomes* will fallback on the closest property. In this case, `"es"` or `"en"`.
 
 ## Extract/Import scripts
 
-**redux-i18n** includes a script to extract your translation strings to a *.pot* template which you can use in *Poedit*, and another to import strings from *po* files to a `translation.js`.
+**pomes** includes a script to extract your translation strings to a *.pot* template which you can use in *Poedit*, and another to import strings from *po* files to a `translation.js`.
 
 Add the scripts in your *package.json* for this purpose:
 
@@ -466,7 +466,7 @@ You can set an empty translations object to the `<I18n/>` component and set the 
 Then you can use the `setTranslations` action.
 
 ```javascript
-import {setTranslations} from 'redux-i18n'
+import {setTranslations} from 'pomes'
 api.get('...').then(r => this.props.dispatch(setTranslations(r.translations)))
 ```
 
@@ -498,7 +498,7 @@ Sometimes language is set initially by the redux store creation, or in an isomor
 If you want to isolate the use of context from your components, you can import the Localize Hoc to provide the translate function as a prop to your component. For example:
 
 ```javascript
-import { localize } from 'redux-i18n'
+import { localize } from 'pomes'
 
 class SomeComponent extends Component {
   render() {
@@ -512,7 +512,7 @@ export default localize()(SomeComponent)
 You can also change the name of the provided prop:
 
 ```javascript
-import { localize } from 'redux-i18n'
+import { localize } from 'pomes'
 
 class SomeComponent extends Component {
   render() {
