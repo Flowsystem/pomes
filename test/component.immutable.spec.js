@@ -6,9 +6,8 @@ import thunk from 'redux-thunk';
 import TestUtils from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 
-import I18n from '../immutable';
-import { i18nState } from '../immutable';
-import { setLanguage } from '../dist/actions';
+import I18n, { i18nState } from 'i18n-immutable';
+import { setLanguage } from 'actions';
 import TransWithoutParams from './components/TransWithoutParams';
 import TransWithParams from './components/TransWithParams';
 import TransWithDollarSignParams from './components/TransWithDollarSignParams';

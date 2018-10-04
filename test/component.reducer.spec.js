@@ -5,9 +5,9 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
-import I18n from '../dist/component';
-import { i18nState } from '../dist/reducer';
-import { setLanguage, setTranslations } from '../dist/actions';
+import I18n from 'component';
+import { i18nState } from 'reducer';
+import { setLanguage, setTranslations } from 'actions';
 
 import TransWithoutParams from './components/TransWithoutParams';
 

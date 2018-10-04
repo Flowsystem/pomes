@@ -5,9 +5,9 @@ import thunk from 'redux-thunk';
 import TestUtils from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 
-import I18n from '../dist/component';
-import { i18nState } from '../dist/reducer';
-import { setLanguage } from '../dist/actions';
+import I18n from 'component';
+import { i18nState } from 'reducer';
+import { setLanguage } from 'actions';
 import TransWithoutParams from './components/TransWithoutParams';
 import TransWithParams from './components/TransWithParams';
 import TransWithDollarSignParams from './components/TransWithDollarSignParams';

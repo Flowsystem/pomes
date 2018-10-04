@@ -12,5 +12,16 @@
   ],
   "extends": [
     "airbnb"
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": {
+          "resolve": {
+            "modules": ["src", "node_modules"]
+          }
+        }
+      }
+    }
+  }
 }

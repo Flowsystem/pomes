@@ -11,3 +11,5 @@ export default connect(state => ({
   translations_reducer: state.i18nState.translations,
   forceRefresh: state.i18nState.forceRefresh,
 }))(I18n);
+
+export { I18nConsumer } from './component';

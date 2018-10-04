@@ -4,7 +4,6 @@
  */
 /* eslint-disable no-new-func */
 
-
 import React from 'react';
 
 const interpolateParams = (text, params) => {

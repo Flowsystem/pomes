@@ -2,7 +2,7 @@ import React, { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils';
-import localize from '../dist/hoc';
+import localize from 'hoc';
 
 describe('hoc test', () => {
   class ProviderMock extends Component {

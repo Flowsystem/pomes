@@ -58,9 +58,10 @@ module.exports = {
   // globals: {},
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  moduleDirectories: [
+    'src',
+    'node_modules',
+  ],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [

@@ -6,8 +6,7 @@ import { combineReducers } from 'redux-immutablejs';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
-import I18n from '../immutable';
-import { i18nState } from '../immutable';
+import I18n, { i18nState } from 'i18n-immutable';
 
 import TransWithoutParams from './components/TransWithoutParams';
 
