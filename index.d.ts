@@ -1,4 +1,4 @@
-declare module 'redux-i18n' {
+declare module 'pomes' {
     import * as React from 'react';
     import {Action} from 'redux';
     import {ThunkAction} from 'redux-thunk';
@@ -50,11 +50,12 @@ declare module 'redux-i18n' {
 
     export function setLanguage(lang: string): ISetLanguageAction
 
+    // @ts-ignore
     export function setTranslations(translations: ITranslations, languageOrOptions?: IlanguageOrOptions | string): ThunkAction<any, IreduxI18nState, any>
 
     export function setForceRefresh(force: boolean): ISetForceRefreshAction
 
-    export function localize(propName?: string): IWrapWithLocalized
+    export function localize(propName?: string, pluralPropName?: string): IWrapWithLocalized
 
     export function getTranslateFunction(translations: ITranslations, lang: string, fallbackLang?: string): IGetTranslateFunctionResponse
 
