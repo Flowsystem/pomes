@@ -18,7 +18,8 @@
       "webpack": {
         "config": {
           "resolve": {
-            "modules": ["src", "node_modules"]
+            "modules": ["src", "node_modules"],
+            "extensions": [".js", ".jsx"]
           }
         }
       }
