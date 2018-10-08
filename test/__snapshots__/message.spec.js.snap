@@ -2,7 +2,7 @@
 
 exports[`Message render 1`] = `
 <I18nProvider
-  dispatch={[Function]}
+  dispatch={null}
   fallbackLang={null}
   initialLang="en"
   initialized={true}

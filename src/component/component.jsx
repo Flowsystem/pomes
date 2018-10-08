@@ -19,7 +19,7 @@ class I18nProvider extends React.PureComponent {
       initialLang,
     } = this.props;
 
-    if (!initialized) {
+    if (!initialized && dispatch) {
       dispatch(setLanguage(initialLang));
     }
   }
@@ -66,7 +66,7 @@ I18nProvider.defaultProps = {
   initialLang: 'en',
   fallbackLang: null,
   initialized: false,
-  dispatch: f => f,
+  dispatch: null,
 };
 
 export default I18nProvider;
