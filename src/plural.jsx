@@ -4,10 +4,6 @@ import { PropTypes } from 'prop-types';
 import { I18nConsumer } from 'component';
 
 class Plural extends React.Component {
-  static contextTypes = {
-    t: PropTypes.func.isRequired,
-  };
-
   static translate = (context, props) => {
     const {
       texts,

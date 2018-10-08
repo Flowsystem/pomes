@@ -4,10 +4,6 @@ import { PropTypes } from 'prop-types';
 import { I18nConsumer } from 'component';
 
 class Message extends React.Component {
-  static contextTypes = {
-    t: PropTypes.func.isRequired,
-  };
-
   static translate = (context, props) => {
     const { text, values, comment } = props;
 

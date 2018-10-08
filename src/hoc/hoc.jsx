@@ -14,12 +14,6 @@ const getDisplayName = (WrappedComponent) => {
 
 export default function localize(translateName = 'message', translatePluralName = 'plural') {
   return function wrapWithLocalized(WrappedComponent) {
-    invariant(
-      typeof WrappedComponent === 'function',
-      `You must pass a component to the function returned by localize.
-      Instead received ${JSON.stringify(WrappedComponent)}`,
-    );
-
     const Localized = props => (
       <I18nConsumer>
         {context => (
@@ -36,6 +30,6 @@ export default function localize(translateName = 'message', translatePluralName 
 
     Localized.displayName = getDisplayName(WrappedComponent);
 
-    return hoistStatics(Localized, WrappedComponent);
+    return Localized;
   };
 }

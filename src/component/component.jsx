@@ -6,13 +6,10 @@
 
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import deepForceUpdate from 'react-deep-force-update';
-import { setForceRefresh, setLanguage } from '../actions';
-import getTranslateFunction from '../getTranslateFunction';
 
-const I18nContext = React.createContext();
-const I18nConsumer = I18nContext.Consumer;
-export { I18nConsumer };
+import { setLanguage } from 'actions';
+import getTranslateFunction from 'getTranslateFunction';
+import I18nContext from 'component/context';
 
 class I18nProvider extends React.PureComponent {
   componentWillMount() {
