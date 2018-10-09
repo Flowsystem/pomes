@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Message render 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="en"
+  translations={Object {}}
+  useReducer={false}
+>
+  <Message
+    comment="Foo"
+    text="Hello {name}"
+    values={
+      Object {
+        "name": "foo",
+      }
+    }
+  >
+    Hello foo
+  </Message>
+</I18nProvider>
+`;

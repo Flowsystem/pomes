@@ -1,16 +1,17 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+
+import { I18nConsumer } from 'component';
 
 class TransWithJunkParams extends React.Component {
   render() {
     return (
-      <div>{this.context.t('{a}, {b}, and {c} as strings', { a: undefined, b: null, c: false })}</div>
+      <I18nConsumer>
+        {context => (
+          <div>{context.t('{a}, {b}, and {c} as strings', { a: undefined, b: null, c: false })}</div>
+        )}
+      </I18nConsumer>
     );
   }
 }
-
-TransWithJunkParams.contextTypes = {
-  t: PropTypes.func.isRequired,
-};
 
 export default TransWithJunkParams;

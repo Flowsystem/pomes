@@ -1,4 +1,8 @@
-const jsdom = require('jsdom-no-contextify');
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
-global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-global.window = document.parentWindow;
+Enzyme.configure({ adapter: new Adapter() });
+
+beforeEach(() => {
+  jest.resetModules();
+});

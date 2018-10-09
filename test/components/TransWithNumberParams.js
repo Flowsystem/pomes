@@ -1,16 +1,17 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+
+import { I18nConsumer } from 'component';
 
 class TransWithNumberParams extends React.Component {
   render() {
     return (
-      <div>{this.context.t('{number} things!', { number: 13 })}</div>
+      <I18nConsumer>
+        {context => (
+          <div>{context.t('{number} things!', { number: 13 })}</div>
+        )}
+      </I18nConsumer>
     );
   }
 }
-
-TransWithNumberParams.contextTypes = {
-  t: PropTypes.func.isRequired,
-};
 
 export default TransWithNumberParams;

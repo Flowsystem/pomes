@@ -1,18 +1,19 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+
+import { I18nConsumer } from 'component';
 
 class TransWithoutParams extends React.Component {
   render() {
     return (
       <div>
-        <span>{this.context.t('Hello')}</span>
+        <I18nConsumer>
+          {context => (
+            <span>{context.t('Hello')}</span>
+          )}
+        </I18nConsumer>
       </div>
     );
   }
 }
-
-TransWithoutParams.contextTypes = {
-  t: PropTypes.func.isRequired,
-};
 
 export default TransWithoutParams;

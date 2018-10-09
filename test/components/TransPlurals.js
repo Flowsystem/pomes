@@ -1,22 +1,23 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+
+import { I18nConsumer } from 'component';
 
 export function TransPluralize1({}, context) {
   return (
-    <span>{context.t(['una noche', '{n} noches', 'n'], { n: 1 })}</span>
+    <I18nConsumer>
+      {context => (
+        <span>{context.t(['una noche', '{n} noches', 'n'], { n: 1 })}</span>
+      )}
+    </I18nConsumer>
   );
 }
 
 export function TransPluralize2({}, context) {
   return (
-    <span>{context.t(['una noche', '{n} noches', 'n'], { n: 5 })}</span>
+    <I18nConsumer>
+      {context => (
+        <span>{context.t(['una noche', '{n} noches', 'n'], { n: 5 })}</span>
+      )}
+    </I18nConsumer>
   );
 }
-
-TransPluralize1.contextTypes = {
-  t: PropTypes.func.isRequired,
-};
-
-TransPluralize2.contextTypes = {
-  t: PropTypes.func.isRequired,
-};

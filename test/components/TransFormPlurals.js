@@ -1,22 +1,23 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+
+import { I18nConsumer } from 'component';
 
 export function TransFormPluralize1({ n }, context) {
   return (
-    <span>{context.t(['{n} banane', '{n} bananes', 'n'], { n })}</span>
+    <I18nConsumer>
+      {context => (
+        <span>{context.t(['{n} banane', '{n} bananes', 'n'], { n })}</span>
+      )}
+    </I18nConsumer>
   );
 }
-
-TransFormPluralize1.contextTypes = {
-  t: PropTypes.func.isRequired,
-};
 
 export function TransFormPluralize2({ n }, context) {
   return (
-    <span>{context.t(['plural 1/{n}', 'plural 2/{n}', 'plural 3/{n}', 'n'], { n })}</span>
+    <I18nConsumer>
+      {context => (
+        <span>{context.t(['plural 1/{n}', 'plural 2/{n}', 'plural 3/{n}', 'n'], { n })}</span>
+      )}
+    </I18nConsumer>
   );
 }
-
-TransFormPluralize2.contextTypes = {
-  t: PropTypes.func.isRequired,
-};

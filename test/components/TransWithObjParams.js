@@ -1,14 +1,18 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+
+import { I18nConsumer } from 'component';
 
 const TransWithObjParams = ({}, context) => {
   const user = { name: 'Cesc' };
   const name = <span>{user.name}</span>;
-  return <div>{context.t('Hello {name}', { name })}</div>;
-};
 
-TransWithObjParams.contextTypes = {
-  t: PropTypes.func.isRequired,
+  return (
+    <I18nConsumer>
+      {context => (
+        <div>{context.t('Hello {name}', { name })}</div>
+      )}
+    </I18nConsumer>
+  );
 };
 
 export default TransWithObjParams;
