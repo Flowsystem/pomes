@@ -12,6 +12,7 @@ const Message = props => (
 
 Message.propTypes = {
   comment: PropTypes.string.isRequired,
+  context: PropTypes.string,
   id: PropTypes.string.isRequired,
   pluralCondition: PropTypes.string,
   pluralId: PropTypes.string,
@@ -19,6 +20,7 @@ Message.propTypes = {
 };
 
 Message.defaultProps = {
+  context: null,
   pluralCondition: null,
   pluralId: null,
   values: {},
