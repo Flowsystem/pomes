@@ -1,9 +1,4 @@
 import React from 'react';
-import hoistStatics from 'hoist-non-react-statics';
-import invariant from 'invariant';
-
-import Message from 'message';
-import Plural from 'plural';
 import { I18nConsumer } from 'component';
 
 const getDisplayName = (WrappedComponent) => {
@@ -12,7 +7,7 @@ const getDisplayName = (WrappedComponent) => {
   return `Localized(${displayName})`;
 };
 
-export default function localize(translateName = 'message', translatePluralName = 'plural') {
+export default function localize(translateName = 'message') {
   return function wrapWithLocalized(WrappedComponent) {
     const Localized = props => (
       <I18nConsumer>
@@ -20,8 +15,7 @@ export default function localize(translateName = 'message', translatePluralName 
           <WrappedComponent
             {...props}
             {...{
-              [translateName]: messageObject => Message.translate(context, messageObject),
-              [translatePluralName]: messageObject => Plural.translate(context, messageObject),
+              [translateName]: messageObject => context.message(messageObject),
             }}
           />
         )}

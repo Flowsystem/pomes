@@ -2,7 +2,7 @@
  * Project: pomes
  * File: getTranslateFunction.js
  */
-/* eslint-disable no-new-func */
+/* eslint-disable no-new-func,max-len,camelcase */
 
 import React from 'react';
 
@@ -49,39 +49,67 @@ const getOptionValue = (options, key, defaultValue) => {
   return options[key] === undefined ? (defaultValue || null) : options[key];
 };
 
-export default (translations, lang, fallbackLang) => {
-  const langMessages = getLangMessages(translations, lang);
-  const fallbackLangMessages = fallbackLang ? getLangMessages(translations, fallbackLang) : undefined;
-  const plural_rule = getOptionValue(translations.options, 'plural_rule', 'n != 1');
-  const plural_number = parseInt(getOptionValue(translations.options, 'plural_number', '2'), 10);
+const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
+  langMessages: getLangMessages(translations, lang),
+  fallbackLangMessages: fallbackLang ? getLangMessages(translations, fallbackLang) : undefined,
+  pluralRule: getOptionValue(translations.options, 'plural_rule', 'n != 1'),
+  pluralNumber: parseInt(getOptionValue(translations.options, 'plural_number', '2'), 10),
+});
+
+const translateTextKey = (langMessages, fallbackLangMessages, textKey, values, comment) => {
+  if (typeof comment !== 'string' || !comment) {
+    console.warn(`Comment is mandatory for "${textKey}"`);
+  }
+
+  if (!langMessages && !fallbackLangMessages) {
+    return interpolateParams(textKey, values);
+  }
+
+  const message = langMessages ? langMessages[textKey] : undefined;
+  if (message === undefined || message === '') {
+    // If don't have literal translation and have fallback lang, try
+    // to get from there.
+    if (fallbackLangMessages) {
+      const literal = fallbackLangMessages[textKey];
+      if (literal !== undefined && literal !== '') {
+        return interpolateParams(literal, values);
+      }
+    }
+    return interpolateParams(textKey, values);
+  }
+  return interpolateParams(message, values);
+};
+
+export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => {
+  const {
+    langMessages, fallbackLangMessages, pluralRule: plural_rule, pluralNumber: plural_number,
+  } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
   return (textKey, params, comment) => {
-
     // Checking if textkey contains a pluralize object.
     if (typeof textKey === 'object') {
+      // eslint-disable-next-line no-param-reassign
       textKey = textKey[Number(new Function('n', `return ${plural_rule}`)(params[textKey[plural_number]]))];
     }
+    return translateTextKey(langMessages, fallbackLangMessages, textKey, params, comment);
+  };
+};
 
-    if (typeof comment !== 'string' || !comment) {
-      console.warn(`Comment is mandatory for "${textKey}"`);
-    }
+export default (translations, lang, fallbackLang) => {
+  const {
+    langMessages, fallbackLangMessages, pluralRule,
+  } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
-    if (!langMessages && !fallbackLangMessages) {
-      return interpolateParams(textKey, params);
+  return ({
+    id, values = {}, comment, pluralId = null, pluralCondition = '', future,
+  }) => {
+    let textKey = id;
+    if (pluralId && Function('n', `return ${pluralRule}`)(values[pluralCondition])) {
+      textKey = pluralId;
     }
-
-    const message = langMessages ? langMessages[textKey] : undefined;
-    if (message === undefined || message === '') {
-      // If don't have literal translation and have fallback lang, try
-      // to get from there.
-      if (fallbackLangMessages) {
-        const literal = fallbackLangMessages[textKey];
-        if (literal !== undefined && literal !== '') {
-          return interpolateParams(literal, params);
-        }
-      }
-      return interpolateParams(textKey, params);
+    if (future) {
+      return textKey;
     }
-    return interpolateParams(message, params);
+    return translateTextKey(langMessages, fallbackLangMessages, textKey, values, comment);
   };
 };
