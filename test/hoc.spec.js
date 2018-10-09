@@ -62,7 +62,6 @@ describe('hoc test', () => {
     const stub = treeWrapper.find(Passthrough);
     expect(stub.props().foo).toEqual('bar');
     expect(stub.props().message).toEqual(expect.any(Function));
-    expect(stub.props().plural).toEqual(expect.any(Function));
   });
 
   it('should allow you to set the prop name in the child component by passing an arg to localize', () => {
@@ -72,7 +71,7 @@ describe('hoc test', () => {
       }
     }
 
-    const Container = localize('singularMessageFunc', 'pluralMessageFunc')(Passthrough);
+    const Container = localize('messageFunc')(Passthrough);
     const treeWrapper = mount(
       <I18nProvider translations={translations} lang="en" initialLang="en" initialized>
         <Container />
@@ -80,50 +79,49 @@ describe('hoc test', () => {
     );
     const stub = treeWrapper.find(Passthrough);
     const singularMessage = {
-      text: 'foo {bar}',
+      id: 'foo {bar}',
       values: {
         bar: 1,
       },
       comment: 'Foo',
     };
     const pluralMessage = {
-      texts: ['singular', 'plural'],
-      condition: 'count',
+      id: 'singular',
+      pluralId: 'plural',
+      pluralCondition: 'count',
       values: {
         count: 1,
       },
       comment: 'Foo',
     };
     expect(stub.props().message).toBe(undefined);
-    expect(stub.props().plural).toBe(undefined);
-    expect(stub.props().singularMessageFunc).toEqual(expect.any(Function));
-    expect(stub.props().pluralMessageFunc).toEqual(expect.any(Function));
+    expect(stub.props().messageFunc).toEqual(expect.any(Function));
 
-    stub.props().singularMessageFunc(singularMessage);
-    expect(context.t).toHaveBeenCalledTimes(1);
-    expect(context.t).toHaveBeenCalledWith('foo {bar}', { bar: 1 }, 'Foo');
+    stub.props().messageFunc(singularMessage);
+    expect(context.message).toHaveBeenCalledTimes(1);
+    expect(context.message).toHaveBeenCalledWith(singularMessage);
 
-    context.t.mockReset();
+    context.message.mockReset();
 
-    stub.props().pluralMessageFunc(pluralMessage);
-    expect(context.t).toHaveBeenCalledTimes(1);
-    expect(context.t).toHaveBeenCalledWith(['singular', 'plural', 'count'], { count: 1 }, 'Foo');
+    stub.props().messageFunc(pluralMessage);
+    expect(context.message).toHaveBeenCalledTimes(1);
+    expect(context.message).toHaveBeenCalledWith(pluralMessage);
   });
 
   it('also decorate functions', () => {
+    const messageObject = {
+      id: 'foo {bar}',
+      values: {
+        bar: 1,
+      },
+      comment: 'bar',
+    };
     const Passthrough = (props) => {
       const { message } = props;
-
       return (
         <div>
           {
-            message({
-              text: 'foo {bar}',
-              values: {
-                bar: 1,
-              },
-              comment: 'bar',
-            })
+            message(messageObject)
           }
         </div>
       );
@@ -139,7 +137,6 @@ describe('hoc test', () => {
     const stub = treeWrapper.find(Passthrough);
     expect(stub.props().foo).toEqual('bar');
     expect(stub.props().message).toEqual(expect.any(Function));
-    expect(stub.props().plural).toEqual(expect.any(Function));
-    expect(context.t).toHaveBeenCalledWith('foo {bar}', { bar: 1 }, 'bar');
+    expect(context.message).toHaveBeenCalledWith(messageObject);
   });
 });

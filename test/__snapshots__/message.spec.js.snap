@@ -12,7 +12,9 @@ exports[`Message render 1`] = `
 >
   <Message
     comment="Foo"
-    text="Hello {name}"
+    id="Hello {name}"
+    pluralCondition={null}
+    pluralId={null}
     values={
       Object {
         "name": "foo",

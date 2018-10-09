@@ -9,7 +9,7 @@ describe('Message', () => {
     const translations = {};
     const message = mount(
       <I18nProvider translations={translations} lang="en" initialLang="en" initialized>
-        <Message text="Hello {name}" values={{ name: 'foo' }} comment="Foo" />
+        <Message id="Hello {name}" values={{ name: 'foo' }} comment="Foo" />
       </I18nProvider>,
     );
 
