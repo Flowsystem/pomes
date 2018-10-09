@@ -13,6 +13,7 @@ exports[`Message render 1`] = `
   <Message
     comment="Foo"
     context={null}
+    future={false}
     id="Hello {name}"
     pluralCondition={null}
     pluralId={null}
