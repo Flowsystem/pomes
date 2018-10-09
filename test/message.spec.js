@@ -22,6 +22,9 @@ describe('Message', () => {
         pt: {
           'Hello': 'Olá',
         },
+        en: {
+          'Hello': 'Hello',
+        },
       };
       const message = mount(
         <I18nProvider translations={translations} lang="pt" initialLang="en" initialized>
@@ -38,6 +41,10 @@ describe('Message', () => {
         pt: {
           'You have one message': 'Você tem uma mensagem',
           'You have {count} messages': 'Você tem {count} mensagens',
+        },
+        en: {
+          'You have one message': 'You have one message',
+          'You have {count} messages': 'You have {count} messages',
         },
       };
       const message = mount(
