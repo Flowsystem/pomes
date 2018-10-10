@@ -108,7 +108,7 @@ export default (translations, lang, fallbackLang) => {
       textKey = pluralId;
     }
     if (future) {
-      return translateTextKey({}, fallbackLangMessages, textKey, values, comment)
+      return interpolateParams(textKey, values);
     }
     return translateTextKey(langMessages, fallbackLangMessages, textKey, values, comment);
   };
