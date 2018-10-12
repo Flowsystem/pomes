@@ -2,7 +2,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { I18nConsumer } from 'component';
+import { I18nConsumer } from 'component/index';
 
 const Message = props => (
   <I18nConsumer>

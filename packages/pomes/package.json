@@ -1,0 +1,116 @@
+{
+  "name": "pomes",
+  "version": "0.0.1",
+  "description": "A simple and powerful package to translate your react applications.",
+  "author": "Oneflow <assets@oneflow.com> (https://www.oneflow.com)",
+  "homepage": "https://github.com/Flowsystem/pomes/tree/master/packages/pomes#readme",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "typings": "./index.d.ts",
+  "directories": {
+    "test": "__tests__"
+  },
+  "files": [
+    "*.md",
+    "dist",
+    "index.d.ts"
+  ],
+  "keywords": [
+    "react",
+    "reactjs",
+    "flux",
+    "redux",
+    "i18n",
+    "gettext",
+    "translations",
+    "poedit",
+    "po",
+    "internationalize"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flowsystem/pomes.git"
+  },
+  "scripts": {
+    "clean": "rm -rf dist; rm -rf coverage",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production webpack",
+    "lint": "eslint . --ext '.js,.jsx'",
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/Flowsystem/pomes/issues"
+  },
+  "bin": {
+    "i18n_extract": "bin/i18n_extract.js",
+    "i18n_import": "bin/i18n_import.js"
+  },
+  "dependencies": {
+    "colors": "^1.3.2",
+    "escape-quotes": "^1.0.2",
+    "gettext-parser": "^2.0.0",
+    "glob": "^7.1.3",
+    "hoist-non-react-statics": "^3.0.1",
+    "invariant": "^2.2.4",
+    "optimist": "^0.6.1",
+    "react-deep-force-update": "^2.1.3"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-redux": "^5.0.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.2",
+    "@babel/plugin-proposal-do-expressions": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.1.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "codecov": "^3.1.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "enzyme-to-json": "^3.3.4",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-import-resolver-webpack": "^0.10.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "gettext-parser": "^2.0.0",
+    "immutable": "^3.8.2",
+    "jest": "^23.6.0",
+    "jsdom-no-contextify": "^3.1.0",
+    "lerna": "^3.4.1",
+    "moment": "~2.22.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-immutablejs": "0.0.8",
+    "redux-promise-middleware": "^5.1.1",
+    "redux-thunk": "^2.3.0",
+    "regenerator-runtime": "^0.12.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

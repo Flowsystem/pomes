@@ -1,5 +1,5 @@
 import React from 'react';
-import { I18nConsumer } from 'component';
+import { I18nConsumer } from 'component/index';
 
 const getDisplayName = (WrappedComponent) => {
   const displayName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
