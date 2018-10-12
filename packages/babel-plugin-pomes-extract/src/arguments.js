@@ -7,6 +7,7 @@ const DEFAULTS = {
     plural: 'pluralId',
     context: 'context',
     comment: 'comment',
+    future: 'future',
   },
   function: {
     name: 'message',
@@ -48,4 +49,6 @@ module.exports = {
   getContextAttribute: state => getComponentOptions(state).context,
 
   getCommentAttribute: state => getComponentOptions(state).comment,
+
+  getFutureAttribute: state => getComponentOptions(state).future,
 };

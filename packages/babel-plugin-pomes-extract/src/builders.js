@@ -8,6 +8,7 @@ const {
   getPluralAttribute,
   getContextAttribute,
   getCommentAttribute,
+  getFutureAttribute,
 } = require('./arguments');
 
 const {
@@ -161,7 +162,7 @@ module.exports = {
     const element = path.node.openingElement;
 
     if (element.name.name === getComponentName(state)) {
-      if (element.attributes.find(attribute => attribute.name.name === 'future')) {
+      if (element.attributes.find(attribute => attribute.name.name === getFutureAttribute(state))) {
         return null;
       }
       const entry = {};
