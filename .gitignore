@@ -5,4 +5,6 @@ src_tmp
 package-lock.json
 .idea
 npm-debug.log
+lerna-debug.log
 coverage
+.DS_Store

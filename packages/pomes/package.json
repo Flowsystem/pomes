@@ -2,25 +2,18 @@
   "name": "pomes",
   "version": "0.0.1",
   "description": "A simple and powerful package to translate your react applications.",
+  "author": "Oneflow <assets@oneflow.com> (https://www.oneflow.com)",
+  "homepage": "https://github.com/Flowsystem/pomes/tree/master/packages/pomes#readme",
+  "license": "ISC",
   "main": "./dist/index.js",
   "typings": "./index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Flowsystem/pomes"
-  },
-  "scripts": {
-    "clean": "rm -rf dist; rm -rf coverage",
-    "prebuild": "npm run clean",
-    "build": "NODE_ENV=production webpack",
-    "lint": "eslint . --ext '.js,.jsx'",
-    "test": "jest"
+  "directories": {
+    "test": "__tests__"
   },
   "files": [
-    "bin",
     "*.md",
     "dist",
-    "index.d.ts",
-    "immutable.js"
+    "index.d.ts"
   ],
   "keywords": [
     "react",
@@ -34,12 +27,23 @@
     "po",
     "internationalize"
   ],
-  "author": "Oneflow <assets@oneflow.com> (https://www.oneflow.com)",
-  "license": "MIT",
-  "homepage": "https://github.com/Flowsystem/pomes",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flowsystem/pomes.git"
+  },
+  "scripts": {
+    "clean": "rm -rf dist; rm -rf coverage",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production webpack",
+    "lint": "eslint . --ext '.js,.jsx'",
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/Flowsystem/pomes/issues"
+  },
   "bin": {
-    "i18n_extract": "./bin/i18n_extract.js",
-    "i18n_import": "./bin/i18n_import.js"
+    "i18n_extract": "bin/i18n_extract.js",
+    "i18n_import": "bin/i18n_import.js"
   },
   "dependencies": {
     "colors": "^1.3.2",
