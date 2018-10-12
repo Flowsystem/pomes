@@ -1,5 +1,154 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Message future skip translation of future plural messages 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="pt"
+  translations={
+    Object {
+      "en": Object {
+        "You have one message": "You have one message",
+        "You have {count} messages": "You have {count} messages",
+      },
+      "pt": Object {
+        "You have one message": "Você tem uma mensagem",
+        "You have {count} messages": "Você tem {count} mensagens",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    comment="Foo"
+    context={null}
+    future={true}
+    id="You have one message"
+    pluralCondition="count"
+    pluralId="You have {count} messages"
+    values={
+      Object {
+        "count": 2,
+        "name": "foo",
+      }
+    }
+  >
+    You have 2 messages
+  </Message>
+</I18nProvider>
+`;
+
+exports[`Message future skip translation of future singular messages 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="pt"
+  translations={
+    Object {
+      "en": Object {
+        "Hello": "Hello",
+      },
+      "pt": Object {
+        "Hello": "Olá",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    comment="Foo"
+    context={null}
+    future={true}
+    id="Hello {name}"
+    pluralCondition={null}
+    pluralId={null}
+    values={
+      Object {
+        "name": "foo",
+      }
+    }
+  >
+    Hello foo
+  </Message>
+</I18nProvider>
+`;
+
+exports[`Message plural translate plural messages 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="pt"
+  translations={
+    Object {
+      "pt": Object {
+        "You have one message": "Você tem uma mensagem",
+        "You have {count} messages": "Você tem {count} mensagens",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    comment="Foo"
+    context={null}
+    future={false}
+    id="You have one message"
+    pluralCondition="count"
+    pluralId="You have {count} messages"
+    values={
+      Object {
+        "count": 2,
+        "name": "foo",
+      }
+    }
+  >
+    Você tem 2 mensagens
+  </Message>
+</I18nProvider>
+`;
+
+exports[`Message plural translate singular form of plural messages 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="pt"
+  translations={
+    Object {
+      "pt": Object {
+        "You have one message": "Você tem uma mensagem",
+        "You have {count} messages": "Você tem {count} mensagens",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    comment="Foo"
+    context={null}
+    future={false}
+    id="You have one message"
+    pluralCondition="count"
+    pluralId="You have {count} messages"
+    values={
+      Object {
+        "count": 1,
+        "name": "foo",
+      }
+    }
+  >
+    Você tem uma mensagem
+  </Message>
+</I18nProvider>
+`;
+
 exports[`Message render 1`] = `
 <I18nProvider
   dispatch={null}
@@ -12,7 +161,11 @@ exports[`Message render 1`] = `
 >
   <Message
     comment="Foo"
-    text="Hello {name}"
+    context={null}
+    future={false}
+    id="Hello {name}"
+    pluralCondition={null}
+    pluralId={null}
     values={
       Object {
         "name": "foo",

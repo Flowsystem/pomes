@@ -1,3 +1,4 @@
+/* eslint-disable camelcase,react/prop-types */
 /*
  * Project: pomes
  * File: component/component.js
@@ -8,7 +9,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import { setLanguage } from 'actions';
-import getTranslateFunction from 'getTranslateFunction';
+import getTranslateFunction, { legacyGetTranslateFunction } from 'getTranslateFunction';
 import I18nContext from 'component/context';
 
 class I18nProvider extends React.PureComponent {
@@ -34,16 +35,21 @@ class I18nProvider extends React.PureComponent {
       children,
     } = this.props;
 
+    const context = {
+      t: legacyGetTranslateFunction(
+        useReducer ? translations_reducer : translations,
+        lang,
+        fallbackLang,
+      ),
+      message: getTranslateFunction(
+        useReducer ? translations_reducer : translations,
+        lang,
+        fallbackLang,
+      ),
+    };
+
     return (
-      <I18nContext.Provider
-        value={{
-          t: getTranslateFunction(
-            useReducer ? translations_reducer : translations,
-            lang,
-            fallbackLang,
-          ),
-        }}
-      >
+      <I18nContext.Provider value={context}>
         {children}
       </I18nContext.Provider>
     );

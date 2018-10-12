@@ -1,31 +1,30 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import { I18nConsumer } from 'component';
 
-class Message extends React.Component {
-  static translate = (context, props) => {
-    const { text, values, comment } = props;
-
-    return context.t(text, values, comment);
-  };
-
-  render() {
-    return (
-      <I18nConsumer>
-        {context => Message.translate(context, this.props)}
-      </I18nConsumer>
-    );
-  }
-}
+const Message = props => (
+  <I18nConsumer>
+    {context => context.message(props)}
+  </I18nConsumer>
+);
 
 Message.propTypes = {
-  text: PropTypes.string.isRequired,
-  values: PropTypes.shape(),
   comment: PropTypes.string.isRequired,
+  context: PropTypes.string,
+  future: PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  pluralCondition: PropTypes.string,
+  pluralId: PropTypes.string,
+  values: PropTypes.shape(),
 };
 
 Message.defaultProps = {
+  context: null,
+  future: false,
+  pluralCondition: null,
+  pluralId: null,
   values: {},
 };
 
