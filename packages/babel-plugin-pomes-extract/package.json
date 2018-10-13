@@ -53,15 +53,5 @@
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^23.5.0"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src/",
-      "<rootDir>/test/"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "./src"
-    ]
   }
 }
