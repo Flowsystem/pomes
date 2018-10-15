@@ -1,6 +1,6 @@
 {
   "name": "pomes",
-  "version": "1.5.13",
+  "version": "0.0.1",
   "description": "A simple and powerful package to translate your react applications.",
   "main": "./dist/index.js",
   "typings": "./index.d.ts",
