@@ -1,12 +1,12 @@
 {
-  "name": "pomes",
+  "name": "@oneflowab/pomes",
   "version": "0.0.1",
   "description": "A simple and powerful package to translate your react applications.",
   "main": "./dist/index.js",
   "typings": "./index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Flowsystem/pomes"
+    "url": "git+https://github.com/Flowsystem/pomes.git"
   },
   "scripts": {
     "clean": "rm -rf dist; rm -rf coverage",
@@ -107,5 +107,12 @@
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
     "webpack-node-externals": "^1.7.2"
+  },
+  "bugs": {
+    "url": "https://github.com/Flowsystem/pomes/issues"
+  },
+  "directories": {
+    "lib": "src",
+    "test": "test"
   }
 }
