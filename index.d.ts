@@ -1,4 +1,4 @@
-declare module 'pomes' {
+declare module '@oneflowab/pomes' {
     import * as React from 'react';
     import {Action} from 'redux';
     import {ThunkAction} from 'redux-thunk';
