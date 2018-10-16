@@ -1,3 +1,5 @@
+import {I18nProps} from "@oneflowab/pomes";
+
 declare module '@oneflowab/pomes' {
     import * as React from 'react';
     import {Action} from 'redux';
@@ -46,6 +48,16 @@ declare module '@oneflowab/pomes' {
         preserveExisting?: boolean;
     }
 
+    export interface MessageProps {
+        comment?: string;
+        context?: string;
+        future?: boolean;
+        id: string;
+        pluralCondition?: string;
+        pluralId?: string;
+        values?: object;
+    }
+
     export function i18nState(state: IreduxI18nState, action: Action): IreduxI18nState
 
     export function setLanguage(lang: string): ISetLanguageAction
@@ -55,11 +67,13 @@ declare module '@oneflowab/pomes' {
 
     export function setForceRefresh(force: boolean): ISetForceRefreshAction
 
-    export function localize(propName?: string, pluralPropName?: string): IWrapWithLocalized
+    export function localize(propName?: string): IWrapWithLocalized
 
     export function getTranslateFunction(translations: ITranslations, lang: string, fallbackLang?: string): IGetTranslateFunctionResponse
 
-    export default class I18n extends React.Component<I18nProps, any> {
+    export class Message extends React.Component<MessageProps, any> {
     }
 
+    export default class I18n extends React.Component<I18nProps, any> {
+    }
 }

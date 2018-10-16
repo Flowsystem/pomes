@@ -11,7 +11,7 @@ const Message = props => (
 );
 
 Message.propTypes = {
-  comment: PropTypes.string.isRequired,
+  comment: PropTypes.string,
   context: PropTypes.string,
   future: PropTypes.bool,
   id: PropTypes.string.isRequired,
@@ -21,6 +21,7 @@ Message.propTypes = {
 };
 
 Message.defaultProps = {
+  comment: null,
   context: null,
   future: false,
   pluralCondition: null,
