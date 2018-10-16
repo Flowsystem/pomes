@@ -11,6 +11,7 @@ import { PropTypes } from 'prop-types';
 import { setLanguage } from 'actions';
 import getTranslateFunction, { legacyGetTranslateFunction } from 'getTranslateFunction';
 import I18nContext from 'component/context';
+import LegacyContextProvider from 'component/legacyContextProvider';
 
 class I18nProvider extends React.PureComponent {
   componentWillMount() {
@@ -32,6 +33,7 @@ class I18nProvider extends React.PureComponent {
       useReducer,
       translations_reducer,
       translations,
+      legacy,
       children,
     } = this.props;
 
@@ -50,7 +52,13 @@ class I18nProvider extends React.PureComponent {
 
     return (
       <I18nContext.Provider value={context}>
-        {children}
+        {
+          legacy ? (
+            <LegacyContextProvider>
+              {children}
+            </LegacyContextProvider>
+          ) : children
+        }
       </I18nContext.Provider>
     );
   }
@@ -63,6 +71,7 @@ I18nProvider.propTypes = {
   initialLang: PropTypes.string,
   fallbackLang: PropTypes.string,
   initialized: PropTypes.bool,
+  legacy: PropTypes.bool,
   children: PropTypes.node.isRequired,
   dispatch: PropTypes.func,
 };
@@ -72,6 +81,7 @@ I18nProvider.defaultProps = {
   initialLang: 'en',
   fallbackLang: null,
   initialized: false,
+  legacy: false,
   dispatch: null,
 };
 

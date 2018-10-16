@@ -7,6 +7,7 @@ exports[`Message future skip translation of future plural messages 1`] = `
   initialLang="en"
   initialized={true}
   lang="pt"
+  legacy={false}
   translations={
     Object {
       "en": Object {
@@ -47,6 +48,7 @@ exports[`Message future skip translation of future singular messages 1`] = `
   initialLang="en"
   initialized={true}
   lang="pt"
+  legacy={false}
   translations={
     Object {
       "en": Object {
@@ -84,6 +86,7 @@ exports[`Message plural translate plural messages 1`] = `
   initialLang="en"
   initialized={true}
   lang="pt"
+  legacy={false}
   translations={
     Object {
       "pt": Object {
@@ -120,6 +123,7 @@ exports[`Message plural translate singular form of plural messages 1`] = `
   initialLang="en"
   initialized={true}
   lang="pt"
+  legacy={false}
   translations={
     Object {
       "pt": Object {
@@ -156,6 +160,7 @@ exports[`Message render 1`] = `
   initialLang="en"
   initialized={true}
   lang="en"
+  legacy={false}
   translations={Object {}}
   useReducer={false}
 >

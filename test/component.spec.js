@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { mount } from 'enzyme';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import TestUtils from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
+import toJson from 'enzyme-to-json';
 
 import I18n from 'component';
 import { i18nState } from 'reducer';
 import { setLanguage } from 'actions';
+import WithLegacyContext from './components/WithLegacyContext';
 import TransWithoutParams from './components/TransWithoutParams';
 import TransWithParams from './components/TransWithParams';
 import TransWithDollarSignParams from './components/TransWithDollarSignParams';
@@ -54,6 +57,23 @@ describe('component test', () => {
 
     expect(store.getState().i18nState).toMatchSnapshot();
     expect(store.getState().i18nState.lang).toEqual('en');
+  });
+
+  it('text with legacy support', () => {
+    const store = createStore(
+      combineReducers({ i18nState }),
+      applyMiddleware(thunk),
+    );
+    const withLegacySupport = mount(
+      <Provider store={store}>
+        <I18n translations={translations} legacy>
+          <WithLegacyContext />
+        </I18n>
+      </Provider>,
+    );
+
+    expect(withLegacySupport.text()).toEqual('Hello legacy context!');
+    expect(toJson(withLegacySupport)).toMatchSnapshot();
   });
 
   it('text without params', () => {
