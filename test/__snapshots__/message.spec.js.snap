@@ -156,6 +156,7 @@ exports[`Message render 1`] = `
   initialLang="en"
   initialized={true}
   lang="en"
+  legacy={false}
   translations={Object {}}
   useReducer={false}
 >
