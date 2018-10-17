@@ -56,11 +56,7 @@ const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
   pluralNumber: parseInt(getOptionValue(translations.options, 'plural_number', '2'), 10),
 });
 
-const translateTextKey = (langMessages, fallbackLangMessages, textKey, values, comment) => {
-  if (typeof comment !== 'string' || !comment) {
-    console.warn(`Comment is mandatory for "${textKey}"`);
-  }
-
+const translateTextKey = (langMessages, fallbackLangMessages, textKey, values) => {
   if (!langMessages && !fallbackLangMessages) {
     return interpolateParams(textKey, values);
   }
@@ -85,13 +81,13 @@ export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => 
     langMessages, fallbackLangMessages, pluralRule: plural_rule, pluralNumber: plural_number,
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
-  return (textKey, params, comment) => {
+  return (textKey, params) => {
     // Checking if textkey contains a pluralize object.
     if (typeof textKey === 'object') {
       // eslint-disable-next-line no-param-reassign
       textKey = textKey[Number(new Function('n', `return ${plural_rule}`)(params[textKey[plural_number]]))];
     }
-    return translateTextKey(langMessages, fallbackLangMessages, textKey, params, comment);
+    return translateTextKey(langMessages, fallbackLangMessages, textKey, params);
   };
 };
 
@@ -101,7 +97,7 @@ export default (translations, lang, fallbackLang) => {
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
   return ({
-    id, values = {}, comment, pluralId = null, pluralCondition = '', future,
+    id, values = {}, pluralId = null, pluralCondition = '', future,
   }) => {
     let textKey = id;
     if (pluralId && Function('n', `return ${pluralRule}`)(values[pluralCondition])) {
@@ -110,6 +106,6 @@ export default (translations, lang, fallbackLang) => {
     if (future) {
       return interpolateParams(textKey, values);
     }
-    return translateTextKey(langMessages, fallbackLangMessages, textKey, values, comment);
+    return translateTextKey(langMessages, fallbackLangMessages, textKey, values);
   };
 };
