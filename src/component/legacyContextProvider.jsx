@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import deepForceUpdate from 'react-deep-force-update';
 import I18nContext from './context';
 
 class LegacyContextConsumer extends React.Component {
   getChildContext() {
     const { context: { t, message } } = this.props;
     return { t, message };
+  }
+
+  componentDidUpdate(prevProps) {
+    const { context } = this.props;
+    if (prevProps.context.t !== context.t) {
+      deepForceUpdate(this);
+    }
   }
 
   render() {
