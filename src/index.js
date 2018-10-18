@@ -3,7 +3,7 @@
  * File: index.js
  */
 
-export { default, I18nConsumer } from './component';
+export { default, I18nContext, I18nConsumer } from './component';
 export { default as Message } from './message';
 export { i18nState } from './reducer';
 export { setLanguage, setTranslations } from './actions';

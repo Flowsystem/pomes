@@ -1,4 +1,4 @@
-# 🍎 Pomes v0.0.5
+# 🍎 Pomes v0.0.6
 
 **pomes** is a simple yet powerful package to translate your *react* applications using *react-redux*.
 
@@ -10,13 +10,13 @@
 ## Installation
 
 ```
-npm i pomes --save
+npm i @oneflowab/pomes --save
 ```
 
 or
 
 ```
-yarn add pomes
+yarn add @oneflowab/pomes --save
 ```
 
 ## Features

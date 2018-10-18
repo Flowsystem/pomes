@@ -62,6 +62,11 @@ declare module '@oneflowab/pomes' {
 
     export function setLanguage(lang: string): ISetLanguageAction
 
+    export interface I18nContext {
+        Provider: object;
+        Consumer: object;
+    }
+
     // @ts-ignore
     export function setTranslations(translations: ITranslations, languageOrOptions?: IlanguageOrOptions | string): ThunkAction<any, IreduxI18nState, any>
 

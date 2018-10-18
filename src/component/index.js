@@ -15,4 +15,4 @@ export default connect(state => ({
   forceRefresh: state.i18nState.forceRefresh,
 }))(I18nProvider);
 
-export { I18nConsumer };
+export { I18nContext, I18nConsumer };
