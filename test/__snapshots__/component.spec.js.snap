@@ -47,6 +47,7 @@ exports[`component test text with legacy support 1`] = `
       initialized={false}
       lang="en"
       legacy={true}
+      reducerTranslations={Object {}}
       translations={
         Object {
           "de-DE": Object {
@@ -63,7 +64,6 @@ exports[`component test text with legacy support 1`] = `
           },
         }
       }
-      translations_reducer={Object {}}
       useReducer={false}
     >
       <LegacyContextProvider>

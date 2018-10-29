@@ -1,0 +1,25 @@
+// @flow
+
+import * as React from 'react';
+
+export type MessageProps = {|
+  singular: true,
+  id: string,
+  comment: string,
+  future?: boolean,
+  context?: string,
+  values?: {},
+|};
+
+export type PluralMessageProps = {|
+  plural: true,
+  id: string,
+  comment: string,
+  future?: boolean,
+  context?: string,
+  pluralId: string,
+  pluralCondition: string,
+  values: {},
+|};
+
+export type TranslateFunction = (MessageProps | PluralMessageProps) => React.Element<string> | string;

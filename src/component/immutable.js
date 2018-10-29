@@ -11,7 +11,7 @@ const I18nConsumer = I18nContext.Consumer;
 
 export default connect(state => ({
   lang: state.getIn(['i18nState', 'lang']),
-  translations_reducer: state.getIn(['i18nState', 'translations']),
+  reducerTranslations: state.getIn(['i18nState', 'translations']),
   forceRefresh: state.getIn(['i18nState', 'forceRefresh']),
 }))(I18n);
 

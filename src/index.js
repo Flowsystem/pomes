@@ -1,7 +1,4 @@
-/*
- * Project: pomes
- * File: index.js
- */
+// @flow
 
 export { default, I18nContext, I18nConsumer } from './component';
 export { default as Message } from './message';

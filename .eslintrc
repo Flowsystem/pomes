@@ -8,10 +8,12 @@
     "jest": true
   },
   "plugins": [
-    "react"
+    "react",
+    "flowtype"
   ],
   "extends": [
-    "airbnb"
+    "airbnb",
+    "plugin:flowtype/recommended"
   ],
   "settings": {
     "import/resolver": {

@@ -1,10 +1,6 @@
-/*
- * Project: pomes
- * File: getTranslateFunction.js
- */
-/* eslint-disable no-new-func,max-len,camelcase */
+// @flow
 
-import React from 'react';
+import * as React from 'react';
 
 const interpolateParams = (text, params) => {
   if (!params) {
@@ -76,7 +72,13 @@ const translateTextKey = (langMessages, fallbackLangMessages, textKey, values) =
   return interpolateParams(message, values);
 };
 
-export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => {
+type GetLegacyTranslateFunction = (
+  (translations: any, lang: string, fallbackLang?: string) => (
+    (string, any, string) => React.Element<string> | string
+  )
+);
+
+export const legacyGetTranslateFunction: GetLegacyTranslateFunction = (translations, lang, fallbackLang) => {
   const {
     langMessages, fallbackLangMessages, pluralRule: plural_rule, pluralNumber: plural_number,
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
@@ -91,21 +93,25 @@ export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => 
   };
 };
 
-export default (translations, lang, fallbackLang) => {
+type GetTranslateFunction = (
+  (translations: any, lang: string, fallbackLang?: string) => TranslateFunction
+);
+
+const getTranslateFunction: GetTranslateFunction = (translations, lang, fallbackLang) => {
   const {
     langMessages, fallbackLangMessages, pluralRule,
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
-  return ({
-    id, values = {}, pluralId = null, pluralCondition = '', future,
-  }) => {
-    let textKey = id;
-    if (pluralId && Function('n', `return ${pluralRule}`)(values[pluralCondition])) {
-      textKey = pluralId;
+  return (message: MessageProps | PluralMessageProps) => {
+    let textKey = message.id;
+    if (message.pluralId && Function('n', `return ${pluralRule}`)(message.values[message.pluralCondition])) {
+      textKey = message.pluralId;
     }
-    if (future) {
-      return interpolateParams(textKey, values);
+    if (message.future) {
+      return interpolateParams(textKey, message.values);
     }
-    return translateTextKey(langMessages, fallbackLangMessages, textKey, values);
+    return translateTextKey(langMessages, fallbackLangMessages, textKey, message.values);
   };
 };
+
+export default getTranslateFunction;
