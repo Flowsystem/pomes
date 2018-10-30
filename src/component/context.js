@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-type Context = {
+export type Context = {
   t: (string, any, string) => React.Element<string> | string,
   message: TranslateFunction,
 };
