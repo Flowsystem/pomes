@@ -65,6 +65,92 @@ describe('Message', () => {
     });
   });
 
+  describe('with a custom component', () => {
+    it('wraps the text with the custom component', () => {
+      const translations = {
+        pt: {
+          'Hello {jsx-start}Joe{jsx-end}': 'Olá {jsx-start}Joe{jsx-end}',
+        },
+        en: {
+          'Hello {jsx-start}Joe{jsx-end}': 'Olá {jsx-start}Joe{jsx-end}',
+        },
+      };
+      const CustomComponent = ({ children }) => <div>{children}</div>;
+      const message = mount(
+        <I18nProvider translations={translations} lang="pt" initialLang="en" initialized>
+          <Message
+            id="Hello {jsx-start}Joe{jsx-end}"
+            comment="Foo"
+            component={CustomComponent}
+            className="CustomClassName"
+            foo="bar"
+          />
+        </I18nProvider>,
+      );
+
+      expect(message.text()).toEqual('Olá Joe');
+      expect(toJson(message)).toMatchSnapshot();
+    });
+
+    it('it accepts a custom component and wrapped variables', () => {
+      const translations = {
+        pt: {
+          'Hello {jsx-start}{name}{jsx-end}': 'Olá {jsx-start}{name}{jsx-end}',
+        },
+        en: {
+          'Hello {jsx-start}{name}{jsx-end}': 'Olá {jsx-start}{name}{jsx-end}',
+        },
+      };
+      const CustomComponent = ({ children }) => <div>{children}</div>;
+      const message = mount(
+        <I18nProvider translations={translations} lang="pt" initialLang="en" initialized>
+          <Message
+            id="Hello {jsx-start}{name}{jsx-end}"
+            values={{
+              name: 'Joe',
+            }}
+            comment="Foo"
+            component={CustomComponent}
+            className="CustomClassName"
+            foo="bar"
+          />
+        </I18nProvider>,
+      );
+
+      expect(message.text()).toEqual('Olá Joe');
+      expect(toJson(message)).toMatchSnapshot();
+    });
+
+    it('it accepts a custom component and variables', () => {
+      const translations = {
+        pt: {
+          'Hello {name} {jsx-start}Doe{jsx-end}': 'Olá {name} {jsx-start}Doe{jsx-end}',
+        },
+        en: {
+          'Hello {name} {jsx-start}Doe{jsx-end}': 'Olá {name} {jsx-start}Doe{jsx-end}',
+        },
+      };
+      const CustomComponent = ({ children }) => <div>{children}</div>;
+      const message = mount(
+        <I18nProvider translations={translations} lang="pt" initialLang="en" initialized>
+          <Message
+            id="Hello {name} {jsx-start}Doe{jsx-end}"
+            values={{
+              name: 'John',
+            }}
+            comment="Foo"
+            component={CustomComponent}
+            className="CustomClassName"
+            foo="bar"
+          />
+        </I18nProvider>,
+      );
+
+      expect(message.text()).toEqual('Olá John Doe');
+      expect(toJson(message)).toMatchSnapshot();
+    });
+  });
+
   describe('plural', () => {
     it('translate singular form of plural messages', () => {
       const singularPTTranslation = 'Você tem uma mensagem';

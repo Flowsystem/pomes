@@ -6,7 +6,40 @@
 
 import React from 'react';
 
-const interpolateParams = (text, params) => {
+const interpolateCustomComponents = (rawText, rawParams, component, componentProps = null) => {
+  const childText = /{jsx-start}(.+){jsx-end}/g.exec(rawText);
+
+  if (!childText) {
+    return [
+      rawText,
+      rawParams,
+    ];
+  }
+
+  const childPlaceholder = `{jsx-start}${childText[1]}{jsx-end}`;
+  const text = rawText.replace(childPlaceholder, '{customChild}');
+  let params;
+
+  if (rawParams) {
+    params = {
+      ...rawParams,
+      customChild: React.createElement(component, componentProps, interpolateParams(childText[1], rawParams)),
+    };
+  }
+
+  return [text, params];
+};
+
+const interpolateParams = (rawText, rawParams, component, componentProps) => {
+  let text;
+  let params;
+
+  if (component) {
+    [text, params] = interpolateCustomComponents(rawText, rawParams, component, componentProps);
+  } else {
+    [text, params] = [rawText, rawParams];
+  }
+
   if (!params) {
     return text;
   }
@@ -56,9 +89,9 @@ const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
   pluralNumber: parseInt(getOptionValue(translations.options, 'plural_number', '2'), 10),
 });
 
-const translateTextKey = (langMessages, fallbackLangMessages, textKey, values) => {
+const translateTextKey = (langMessages, fallbackLangMessages, textKey, values, component, componentProps) => {
   if (!langMessages && !fallbackLangMessages) {
-    return interpolateParams(textKey, values);
+    return interpolateParams(textKey, values, component, componentProps);
   }
 
   const message = langMessages ? langMessages[textKey] : undefined;
@@ -68,12 +101,12 @@ const translateTextKey = (langMessages, fallbackLangMessages, textKey, values) =
     if (fallbackLangMessages) {
       const literal = fallbackLangMessages[textKey];
       if (literal !== undefined && literal !== '') {
-        return interpolateParams(literal, values);
+        return interpolateParams(literal, values, component, componentProps);
       }
     }
-    return interpolateParams(textKey, values);
+    return interpolateParams(textKey, values, component, componentProps);
   }
-  return interpolateParams(message, values);
+  return interpolateParams(message, values, component, componentProps);
 };
 
 export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => {
@@ -97,15 +130,15 @@ export default (translations, lang, fallbackLang) => {
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
   return ({
-    id, values = {}, pluralId = null, pluralCondition = '', future,
+    id, values = {}, pluralId = null, pluralCondition = '', future, comment, component, ...componentProps
   }) => {
     let textKey = id;
     if (pluralId && Function('n', `return ${pluralRule}`)(values[pluralCondition])) {
       textKey = pluralId;
     }
     if (future) {
-      return interpolateParams(textKey, values);
+      return interpolateParams(textKey, values, component, componentProps);
     }
-    return translateTextKey(langMessages, fallbackLangMessages, textKey, values);
+    return translateTextKey(langMessages, fallbackLangMessages, textKey, values, component, componentProps);
   };
 };
