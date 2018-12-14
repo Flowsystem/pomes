@@ -182,6 +182,80 @@ exports[`Message render 1`] = `
 </I18nProvider>
 `;
 
+exports[`Message with a custom component ignores custom component when no child text 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="sv"
+  legacy={false}
+  translations={
+    Object {
+      "en": Object {
+        "before {jsx-start}middle{jsx-end} after": "before {jsx-start}middle{jsx-end} after",
+      },
+      "sv": Object {
+        "before {jsx-start}middle{jsx-end} after": "före {jsx-start}{jsx-end} efter",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    className="CustomClassName"
+    comment="Foo"
+    component={[Function]}
+    context={null}
+    foo="bar"
+    future={false}
+    id="before {jsx-start}middle{jsx-end} after"
+    pluralCondition={null}
+    pluralId={null}
+    values={Object {}}
+  >
+    före  efter
+  </Message>
+</I18nProvider>
+`;
+
+exports[`Message with a custom component ignores custom component when no jsx tags 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="sv"
+  legacy={false}
+  translations={
+    Object {
+      "en": Object {
+        "before {jsx-start}middle{jsx-end} after": "before {jsx-start}middle{jsx-end} after",
+      },
+      "sv": Object {
+        "before {jsx-start}middle{jsx-end} after": "före efter",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    className="CustomClassName"
+    comment="Foo"
+    component={[Function]}
+    context={null}
+    foo="bar"
+    future={false}
+    id="before {jsx-start}middle{jsx-end} after"
+    pluralCondition={null}
+    pluralId={null}
+    values={Object {}}
+  >
+    före efter
+  </Message>
+</I18nProvider>
+`;
+
 exports[`Message with a custom component it accepts a custom component and variables 1`] = `
 <I18nProvider
   dispatch={null}

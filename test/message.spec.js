@@ -149,12 +149,66 @@ describe('Message', () => {
       expect(message.text()).toEqual('Olá John Doe');
       expect(toJson(message)).toMatchSnapshot();
     });
+
+    it('ignores custom component when no jsx tags', () => {
+      const template = 'before {jsx-start}middle{jsx-end} after';
+      const translations = {
+        sv: {
+          [template]: 'före efter',
+        },
+        en: {
+          [template]: template,
+        },
+      };
+      const CustomComponent = ({ children }) => <div>{children}</div>;
+      const message = mount(
+        <I18nProvider translations={translations} lang="sv" initialLang="en" initialized>
+          <Message
+            id={template}
+            comment="Foo"
+            component={CustomComponent}
+            className="CustomClassName"
+            foo="bar"
+          />
+        </I18nProvider>,
+      );
+
+      expect(message.text()).toEqual('före efter');
+      expect(toJson(message)).toMatchSnapshot();
+    });
+
+    it('ignores custom component when no child text', () => {
+      const template = 'before {jsx-start}middle{jsx-end} after';
+      const translations = {
+        sv: {
+          [template]: 'före {jsx-start}{jsx-end} efter',
+        },
+        en: {
+          [template]: template,
+        },
+      };
+      const CustomComponent = ({ children }) => <div>{children}</div>;
+      const message = mount(
+        <I18nProvider translations={translations} lang="sv" initialLang="en" initialized>
+          <Message
+            id={template}
+            comment="Foo"
+            component={CustomComponent}
+            className="CustomClassName"
+            foo="bar"
+          />
+        </I18nProvider>,
+      );
+
+      expect(message.text()).toEqual('före  efter');
+      expect(toJson(message)).toMatchSnapshot();
+    });
   });
 
   describe('plural', () => {
     it('translate singular form of plural messages', () => {
       const singularPTTranslation = 'Você tem uma mensagem';
-      const pluralPTTranslation = 'Você tem {count} mensagens'
+      const pluralPTTranslation = 'Você tem {count} mensagens';
       const translations = {
         pt: {
           'You have one message': singularPTTranslation,
@@ -179,7 +233,7 @@ describe('Message', () => {
 
     it('translate plural messages', () => {
       const singularPTTranslation = 'Você tem uma mensagem';
-      const pluralPTTranslation = 'Você tem {count} mensagens'
+      const pluralPTTranslation = 'Você tem {count} mensagens';
       const translations = {
         pt: {
           'You have one message': singularPTTranslation,

@@ -6,12 +6,29 @@
 
 import React from 'react';
 
+const getOccurrences = (rawText, regexp) => (rawText.match(regexp) || []).length;
+
+const throwIfTooManyJsxOccurrences = (rawText, allowedOccurrences = 1) => {
+  const startOccurrences = getOccurrences(rawText, /{jsx-start}/gi);
+  const endOccurrences = getOccurrences(rawText, /{jsx-end}/gi);
+
+  if (startOccurrences !== endOccurrences) {
+    throw new Error('Pomes error: The number of JSX start and end tags must be the same');
+  }
+
+  if (startOccurrences > allowedOccurrences || endOccurrences > allowedOccurrences) {
+    throw new Error('Pomes error: Only one JSX tag pair is allowed');
+  }
+};
+
 const interpolateCustomComponents = (rawText, rawParams, component, componentProps = null) => {
   const childText = /{jsx-start}(.+){jsx-end}/g.exec(rawText);
 
   if (!childText) {
+    const text = rawText.replace('{jsx-start}', '').replace('{jsx-end}', '');
+
     return [
-      rawText,
+      text,
       rawParams,
     ];
   }
@@ -35,8 +52,10 @@ const interpolateParams = (rawText, rawParams, component, componentProps) => {
   let params;
 
   if (component) {
+    throwIfTooManyJsxOccurrences(rawText, 1);
     [text, params] = interpolateCustomComponents(rawText, rawParams, component, componentProps);
   } else {
+    throwIfTooManyJsxOccurrences(rawText, 0);
     [text, params] = [rawText, rawParams];
   }
 

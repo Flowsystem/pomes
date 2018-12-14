@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getTranslateFunction wraps the text with the custom component 1`] = `
+<span>
+  Olá 
+  <CustomComponent
+    className="CustomClassName"
+  >
+    Joe
+  </CustomComponent>
+  
+</span>
+`;
