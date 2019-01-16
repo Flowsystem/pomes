@@ -35,7 +35,7 @@ const getLangMessages = (translations, lang) => {
   let langMessages = translations[lang];
 
   // Fall back lang
-  if (langMessages === undefined && lang.indexOf('-') > -1) {
+  if (!langMessages && lang.indexOf('-') > -1) {
     langMessages = translations[lang.split('-')[0]];
   }
 
@@ -43,10 +43,10 @@ const getLangMessages = (translations, lang) => {
 };
 
 const getOptionValue = (options, key, defaultValue) => {
-  if (options === undefined) {
+  if (!options) {
     return defaultValue || null;
   }
-  return options[key] === undefined ? (defaultValue || null) : options[key];
+  return !options[key] ? (defaultValue || null) : options[key];
 };
 
 const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
@@ -62,12 +62,12 @@ const translateTextKey = (langMessages, fallbackLangMessages, textKey, values) =
   }
 
   const message = langMessages ? langMessages[textKey] : undefined;
-  if (message === undefined || message === '') {
+  if (!message) {
     // If don't have literal translation and have fallback lang, try
     // to get from there.
     if (fallbackLangMessages) {
       const literal = fallbackLangMessages[textKey];
-      if (literal !== undefined && literal !== '') {
+      if (literal) {
         return interpolateParams(literal, values);
       }
     }
