@@ -181,3 +181,194 @@ exports[`Message render 1`] = `
   </Message>
 </I18nProvider>
 `;
+
+exports[`Message with a custom component ignores custom component when no jsx tags 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="sv"
+  legacy={false}
+  translations={
+    Object {
+      "en": Object {
+        "before {jsx-start}middle{jsx-end} after": "before {jsx-start}middle{jsx-end} after",
+      },
+      "sv": Object {
+        "before {jsx-start}middle{jsx-end} after": "före efter",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    className="CustomClassName"
+    comment="Foo"
+    component={[Function]}
+    context={null}
+    foo="bar"
+    future={false}
+    id="before {jsx-start}middle{jsx-end} after"
+    pluralCondition={null}
+    pluralId={null}
+    values={Object {}}
+  >
+    före efter
+  </Message>
+</I18nProvider>
+`;
+
+exports[`Message with a custom component it accepts a custom component and variables 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="pt"
+  legacy={false}
+  translations={
+    Object {
+      "en": Object {
+        "Hello {name} {jsx-start}Doe{jsx-end}": "Olá {name} {jsx-start}Doe{jsx-end}",
+      },
+      "pt": Object {
+        "Hello {name} {jsx-start}Doe{jsx-end}": "Olá {name} {jsx-start}Doe{jsx-end}",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    className="CustomClassName"
+    comment="Foo"
+    component={[Function]}
+    context={null}
+    foo="bar"
+    future={false}
+    id="Hello {name} {jsx-start}Doe{jsx-end}"
+    pluralCondition={null}
+    pluralId={null}
+    values={
+      Object {
+        "name": "John",
+      }
+    }
+  >
+    <span>
+      Olá 
+      John
+       
+      <CustomComponent
+        className="CustomClassName"
+        context={null}
+        foo="bar"
+      >
+        <div>
+          Doe
+        </div>
+      </CustomComponent>
+    </span>
+  </Message>
+</I18nProvider>
+`;
+
+exports[`Message with a custom component it accepts a custom component and wrapped variables 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="pt"
+  legacy={false}
+  translations={
+    Object {
+      "en": Object {
+        "Hello {jsx-start}{name}{jsx-end}": "Olá {jsx-start}{name}{jsx-end}",
+      },
+      "pt": Object {
+        "Hello {jsx-start}{name}{jsx-end}": "Olá {jsx-start}{name}{jsx-end}",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    className="CustomClassName"
+    comment="Foo"
+    component={[Function]}
+    context={null}
+    foo="bar"
+    future={false}
+    id="Hello {jsx-start}{name}{jsx-end}"
+    pluralCondition={null}
+    pluralId={null}
+    values={
+      Object {
+        "name": "Joe",
+      }
+    }
+  >
+    <span>
+      Olá 
+      <CustomComponent
+        className="CustomClassName"
+        context={null}
+        foo="bar"
+      >
+        <div>
+          Joe
+        </div>
+      </CustomComponent>
+    </span>
+  </Message>
+</I18nProvider>
+`;
+
+exports[`Message with a custom component wraps the text with the custom component 1`] = `
+<I18nProvider
+  dispatch={null}
+  fallbackLang={null}
+  initialLang="en"
+  initialized={true}
+  lang="pt"
+  legacy={false}
+  translations={
+    Object {
+      "en": Object {
+        "Hello {jsx-start}Joe{jsx-end}": "Olá {jsx-start}Joe{jsx-end}",
+      },
+      "pt": Object {
+        "Hello {jsx-start}Joe{jsx-end}": "Olá {jsx-start}Joe{jsx-end}",
+      },
+    }
+  }
+  useReducer={false}
+>
+  <Message
+    className="CustomClassName"
+    comment="Foo"
+    component={[Function]}
+    context={null}
+    foo="bar"
+    future={false}
+    id="Hello {jsx-start}Joe{jsx-end}"
+    pluralCondition={null}
+    pluralId={null}
+    values={Object {}}
+  >
+    <span>
+      Olá 
+      <CustomComponent
+        className="CustomClassName"
+        context={null}
+        foo="bar"
+      >
+        <div>
+          Joe
+        </div>
+      </CustomComponent>
+    </span>
+  </Message>
+</I18nProvider>
+`;

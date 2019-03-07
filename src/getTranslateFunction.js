@@ -6,8 +6,66 @@
 
 import React from 'react';
 
-const interpolateParams = (text, params) => {
-  if (!params) {
+const JSX_START = '{jsx-start}';
+const JSX_END = '{jsx-end}';
+
+const jsxStartRegExp = RegExp(JSX_START, 'gi');
+const jsxEndRegExp = RegExp(JSX_END, 'gi');
+const jsxRegExp = RegExp(`${JSX_START}|${JSX_END}`, 'gi');
+
+const getOccurrences = (rawText, regexp) => (rawText.match(regexp) || []).length;
+
+const throwIfTooManyJsxOccurrences = (rawText, allowedOccurrences = 1) => {
+  const startOccurrences = getOccurrences(rawText, jsxStartRegExp);
+  const endOccurrences = getOccurrences(rawText, jsxEndRegExp);
+
+  if (startOccurrences !== endOccurrences) {
+    throw new Error('Pomes error: The number of JSX start and end tags must be the same');
+  }
+
+  if (startOccurrences > allowedOccurrences || endOccurrences > allowedOccurrences) {
+    throw new Error('Pomes error: Only one JSX tag pair is allowed');
+  }
+};
+
+const throwIfEndBeforeStart = (rawText) => {
+  const jsxMatches = rawText.match(jsxRegExp);
+
+  if (jsxMatches && jsxMatches[0] === JSX_END) {
+    throw new Error('Pomes error: JSX start and end tags are in the wrong order');
+  }
+};
+
+const interpolateCustomComponents = (rawText, rawParams, component, componentProps) => {
+  const childTexts = RegExp(`${JSX_START}(.+)${JSX_END}`, 'g').exec(rawText);
+  const [, childText] = childTexts || [undefined, ''];
+
+  const childPlaceholder = `${JSX_START}${childText}${JSX_END}`;
+  const text = rawText.replace(childPlaceholder, '{customChild}');
+
+  const params = {
+    ...rawParams,
+    // eslint-disable-next-line no-use-before-define
+    customChild: React.createElement(component, componentProps, interpolateParams(childText, rawParams)),
+  };
+
+  return [text, params];
+};
+
+const interpolateParams = (rawText, rawParams, component, componentProps) => {
+  let text;
+  let params;
+
+  if (component) {
+    throwIfTooManyJsxOccurrences(rawText);
+    throwIfEndBeforeStart(rawText);
+    [text, params] = interpolateCustomComponents(rawText, rawParams, component, componentProps);
+  } else {
+    throwIfTooManyJsxOccurrences(rawText, 0);
+    [text, params] = [rawText, rawParams];
+  }
+
+  if (!params || !Object.keys(params).length) {
     return text;
   }
 
@@ -43,10 +101,11 @@ const getLangMessages = (translations, lang) => {
 };
 
 const getOptionValue = (options, key, defaultValue) => {
-  if (options === undefined) {
-    return defaultValue || null;
+  if (!options || !options[key]) {
+    return defaultValue;
   }
-  return options[key] === undefined ? (defaultValue || null) : options[key];
+
+  return options[key];
 };
 
 const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
@@ -56,9 +115,9 @@ const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
   pluralNumber: parseInt(getOptionValue(translations.options, 'plural_number', '2'), 10),
 });
 
-const translateTextKey = (langMessages, fallbackLangMessages, textKey, values) => {
+const translateTextKey = (langMessages, fallbackLangMessages, textKey, values, component, componentProps) => {
   if (!langMessages && !fallbackLangMessages) {
-    return interpolateParams(textKey, values);
+    return interpolateParams(textKey, values, component, componentProps);
   }
 
   const message = langMessages ? langMessages[textKey] : undefined;
@@ -68,12 +127,12 @@ const translateTextKey = (langMessages, fallbackLangMessages, textKey, values) =
     if (fallbackLangMessages) {
       const literal = fallbackLangMessages[textKey];
       if (literal !== undefined && literal !== '') {
-        return interpolateParams(literal, values);
+        return interpolateParams(literal, values, component, componentProps);
       }
     }
-    return interpolateParams(textKey, values);
+    return interpolateParams(textKey, values, component, componentProps);
   }
-  return interpolateParams(message, values);
+  return interpolateParams(message, values, component, componentProps);
 };
 
 export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => {
@@ -81,7 +140,7 @@ export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => 
     langMessages, fallbackLangMessages, pluralRule: plural_rule, pluralNumber: plural_number,
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
-  return (textKey, params) => {
+  return (textKey, params = {}) => {
     // Checking if textkey contains a pluralize object.
     if (typeof textKey === 'object') {
       // eslint-disable-next-line no-param-reassign
@@ -97,15 +156,15 @@ export default (translations, lang, fallbackLang) => {
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
   return ({
-    id, values = {}, pluralId = null, pluralCondition = '', future,
+    id, values = {}, pluralId = null, pluralCondition = '', future, comment, component, ...componentProps
   }) => {
     let textKey = id;
     if (pluralId && Function('n', `return ${pluralRule}`)(values[pluralCondition])) {
       textKey = pluralId;
     }
     if (future) {
-      return interpolateParams(textKey, values);
+      return interpolateParams(textKey, values, component, componentProps);
     }
-    return translateTextKey(langMessages, fallbackLangMessages, textKey, values);
+    return translateTextKey(langMessages, fallbackLangMessages, textKey, values, component, componentProps);
   };
 };
