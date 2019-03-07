@@ -28,13 +28,11 @@ const throwIfTooManyJsxOccurrences = (rawText, allowedOccurrences = 1) => {
   }
 };
 
-const throwIfJsxOccurrencesMisplaced = (rawText) => {
+const throwIfEndBeforeStart = (rawText) => {
   const jsxMatches = rawText.match(jsxRegExp);
 
-  if (jsxMatches
-    && jsxMatches.length === 2
-    && jsxMatches[0] === JSX_END) {
-    throw new Error('Pomes error: JSX start and end tags are misplaced');
+  if (jsxMatches && jsxMatches[0] === JSX_END) {
+    throw new Error('Pomes error: JSX start and end tags are in the wrong order');
   }
 };
 
@@ -60,7 +58,7 @@ const interpolateParams = (rawText, rawParams, component, componentProps) => {
 
   if (component) {
     throwIfTooManyJsxOccurrences(rawText);
-    throwIfJsxOccurrencesMisplaced(rawText);
+    throwIfEndBeforeStart(rawText);
     [text, params] = interpolateCustomComponents(rawText, rawParams, component, componentProps);
   } else {
     throwIfTooManyJsxOccurrences(rawText, 0);

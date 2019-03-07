@@ -54,7 +54,7 @@ describe('getTranslateFunction', () => {
         component: CustomComponent,
         className: 'CustomClassName',
       };
-      expect(() => translateFunction(parameters)).toThrow('Pomes error: JSX start and end tags are misplaced');
+      expect(() => translateFunction(parameters)).toThrow('Pomes error: JSX start and end tags are in the wrong order');
     });
 
     it('throw when multiple custom component levels', () => {
