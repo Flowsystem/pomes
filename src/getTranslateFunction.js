@@ -101,11 +101,11 @@ const getLangMessages = (translations, lang) => {
 };
 
 const getOptionValue = (options, key, defaultValue) => {
-  if (options && options[key]) {
-    return options[key];
+  if (!options || !options[key]) {
+    return defaultValue;
   }
 
-  return defaultValue;
+  return options[key];
 };
 
 const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
