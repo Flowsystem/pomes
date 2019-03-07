@@ -101,7 +101,7 @@ const getLangMessages = (translations, lang) => {
 };
 
 const getOptionValue = (options, key, defaultValue) => {
-  if (!options || !options[key]) {
+  if (!(options && options[key])) {
     return defaultValue;
   }
 
