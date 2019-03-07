@@ -6,11 +6,18 @@
 
 import React from 'react';
 
+const JSX_START = '{jsx-start}';
+const JSX_END = '{jsx-end}';
+
+const jsxStartRegExp = RegExp(JSX_START, 'gi');
+const jsxEndRegExp = RegExp(JSX_END, 'gi');
+const jsxRegExp = RegExp(`${JSX_START}|${JSX_END}`, 'gi');
+
 const getOccurrences = (rawText, regexp) => (rawText.match(regexp) || []).length;
 
 const throwIfTooManyJsxOccurrences = (rawText, allowedOccurrences = 1) => {
-  const startOccurrences = getOccurrences(rawText, /{jsx-start}/gi);
-  const endOccurrences = getOccurrences(rawText, /{jsx-end}/gi);
+  const startOccurrences = getOccurrences(rawText, jsxStartRegExp);
+  const endOccurrences = getOccurrences(rawText, jsxEndRegExp);
 
   if (startOccurrences !== endOccurrences) {
     throw new Error('Pomes error: The number of JSX start and end tags must be the same');
@@ -21,28 +28,28 @@ const throwIfTooManyJsxOccurrences = (rawText, allowedOccurrences = 1) => {
   }
 };
 
-const interpolateCustomComponents = (rawText, rawParams, component, componentProps = null) => {
-  const childText = /{jsx-start}(.+){jsx-end}/g.exec(rawText);
+const throwIfJsxOccurrencesMisplaced = (rawText) => {
+  const jsxMatches = rawText.match(jsxRegExp);
 
-  if (!childText) {
-    const text = rawText.replace('{jsx-start}', '').replace('{jsx-end}', '');
-
-    return [
-      text,
-      rawParams,
-    ];
+  if (jsxMatches
+    && jsxMatches.length === 2
+    && jsxMatches[0] === JSX_END) {
+    throw new Error('Pomes error: JSX start and end tags are misplaced');
   }
+};
 
-  const childPlaceholder = `{jsx-start}${childText[1]}{jsx-end}`;
+const interpolateCustomComponents = (rawText, rawParams, component, componentProps) => {
+  const childTexts = RegExp(`${JSX_START}(.+)${JSX_END}`, 'g').exec(rawText);
+  const [, childText] = childTexts || [undefined, ''];
+
+  const childPlaceholder = `${JSX_START}${childText}${JSX_END}`;
   const text = rawText.replace(childPlaceholder, '{customChild}');
-  let params;
 
-  if (rawParams) {
-    params = {
-      ...rawParams,
-      customChild: React.createElement(component, componentProps, interpolateParams(childText[1], rawParams)),
-    };
-  }
+  const params = {
+    ...rawParams,
+    // eslint-disable-next-line no-use-before-define
+    customChild: React.createElement(component, componentProps, interpolateParams(childText, rawParams)),
+  };
 
   return [text, params];
 };
@@ -52,14 +59,15 @@ const interpolateParams = (rawText, rawParams, component, componentProps) => {
   let params;
 
   if (component) {
-    throwIfTooManyJsxOccurrences(rawText, 1);
+    throwIfTooManyJsxOccurrences(rawText);
+    throwIfJsxOccurrencesMisplaced(rawText);
     [text, params] = interpolateCustomComponents(rawText, rawParams, component, componentProps);
   } else {
     throwIfTooManyJsxOccurrences(rawText, 0);
     [text, params] = [rawText, rawParams];
   }
 
-  if (!params) {
+  if (!params || !Object.keys(params).length) {
     return text;
   }
 
@@ -96,9 +104,9 @@ const getLangMessages = (translations, lang) => {
 
 const getOptionValue = (options, key, defaultValue) => {
   if (options === undefined) {
-    return defaultValue || null;
+    return defaultValue;
   }
-  return options[key] === undefined ? (defaultValue || null) : options[key];
+  return options[key] === undefined ? defaultValue : options[key];
 };
 
 const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
@@ -133,7 +141,7 @@ export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => 
     langMessages, fallbackLangMessages, pluralRule: plural_rule, pluralNumber: plural_number,
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
-  return (textKey, params) => {
+  return (textKey, params = {}) => {
     // Checking if textkey contains a pluralize object.
     if (typeof textKey === 'object') {
       // eslint-disable-next-line no-param-reassign

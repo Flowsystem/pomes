@@ -1,6 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getTranslateFunction wraps the text with the custom component 1`] = `
+exports[`getTranslateFunction #default return the correct value when a jsx custom component with no children 1`] = `
+<span>
+  a text with no child text
+  <CustomComponent
+    className="CustomClassName"
+  >
+    
+  </CustomComponent>
+  in between
+</span>
+`;
+
+exports[`getTranslateFunction #default return the correct value when a string component but with no children 1`] = `
+<span>
+  no text 
+  <div
+    className="CustomClassName"
+  >
+    
+  </div>
+  in between
+</span>
+`;
+
+exports[`getTranslateFunction #default return the correct value when jsx-start end jsx-end are passed with children 1`] = `
+<span>
+  a text with
+  <CustomComponent
+    className="CustomClassName"
+  >
+     child text 
+  </CustomComponent>
+  in between
+</span>
+`;
+
+exports[`getTranslateFunction #default wrap the text with the custom component 1`] = `
 <span>
   Olá 
   <CustomComponent
