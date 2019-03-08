@@ -18,7 +18,7 @@ Message.propTypes = {
   pluralCondition: PropTypes.string,
   pluralId: PropTypes.string,
   values: PropTypes.shape(),
-  component: PropTypes.oneOfType([PropTypes.shape(), PropTypes.func]),
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.shape(), PropTypes.func]),
 };
 
 Message.defaultProps = {
