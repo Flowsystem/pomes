@@ -28,8 +28,14 @@ const translations = {
     'YYYY-MM-DD': 'DD/MM/YYYY',
   },
   en: {
-    'una noche': 'one night',
-    '{n} noches': '{n} nights',
+    'una noche': {
+      default: 'one night',
+      'only nights': 'only one night',
+    },
+    '{n} noches': {
+      default: '{n} nights',
+      'only nights': 'only {n} nights',
+    },
   },
   'de-DE': {
     Hello: 'Hallo',
@@ -64,16 +70,16 @@ describe('component test', () => {
       combineReducers({ i18nState }),
       applyMiddleware(thunk),
     );
-    const withLegacySupport = mount(
+    const withLegacySupport = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
       <Provider store={store}>
         <I18n translations={translations} legacy>
           <WithLegacyContext />
         </I18n>
       </Provider>,
-    );
+    ));
 
-    expect(withLegacySupport.text()).toEqual('Hello legacy context!');
-    expect(toJson(withLegacySupport)).toMatchSnapshot();
+    expect(withLegacySupport.textContent).toEqual('Hello legacy context!');
+    expect(withLegacySupport).toMatchSnapshot();
   });
 
   it('text without params', () => {

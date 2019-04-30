@@ -13,6 +13,7 @@ msgstr ""
 "Language: en\n"
 
 #: src/file1.js src/file2.js
+msgctxt "default"
 msgid "Traducir este texto"
 msgstr "Translate this text"
 
@@ -20,6 +21,26 @@ msgstr "Translate this text"
 #: src/file1.js src/file2.js
 msgid "Hola {n}!"
 msgstr "Hello {n}!"
+
+#. This is a comment for the translator
+#: src/file1.js src/file2.js
+msgctxt "Hello"
+msgid "Hola {n}!!"
+msgstr "Hello {n}!!"
+
+#: src/file1.js src/file2.js
+msgctxt "nights"
+msgid "una noche"
+msgid_plural "{n} noches"
+msgstr[0] "only one night"
+msgstr[1] "all the {n} nights"
+
+#: src/file1.js src/file2.js
+msgctxt "just nights"
+msgid "una noche"
+msgid_plural "{n} noches"
+msgstr[0] "just one night"
+msgstr[1] "just {n} nights"
 
 #: src/file1.js src/file2.js
 msgid "una noche"
@@ -30,6 +51,11 @@ msgstr[1] "{n} nights"
 #: src/file1.js src/file2.js
 msgid "Text 'with' quotes"
 msgstr "Text 'with' quotes"
+
+#: src/file1.js src/file2.js
+msgctxt "quotes"
+msgid "Text without quotes"
+msgstr "Text without quotes"
 
 #: src/file1.js src/file2.js
 msgid ""

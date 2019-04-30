@@ -261,7 +261,6 @@ exports[`Message with a custom component it accepts a custom component and varia
        
       <CustomComponent
         className="CustomClassName"
-        context={null}
         foo="bar"
       >
         <div>
@@ -313,7 +312,6 @@ exports[`Message with a custom component it accepts a custom component and wrapp
       Olá 
       <CustomComponent
         className="CustomClassName"
-        context={null}
         foo="bar"
       >
         <div>
@@ -361,7 +359,6 @@ exports[`Message with a custom component wraps the text with the custom componen
       Olá 
       <CustomComponent
         className="CustomClassName"
-        context={null}
         foo="bar"
       >
         <div>
