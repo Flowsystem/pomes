@@ -52,7 +52,7 @@ exports.getTrans = (file, translations, encoding) => {
   const lang = pocontent.headers.language.replace('_', '-');
 
   // Initializing language dictionary
-  const translation = translations[lang] = {};
+  const translation = {};
 
   for (const context in pocontent.translations) {
     const trans = pocontent.translations[context];
@@ -73,6 +73,8 @@ exports.getTrans = (file, translations, encoding) => {
       }
     }
   }
+
+  translations[lang] = translation;
 
   // Options
   translations.options = {};
