@@ -115,16 +115,16 @@ const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
   pluralNumber: parseInt(getOptionValue(translations.options, 'plural_number', '2'), 10),
 });
 
-const getMessage = (langMessages, textKey, context) => {
+const getMessage = (langMessages, textKey, context = 'default') => {
   if (langMessages) {
     const langMessage = langMessages[textKey];
 
-    if (typeof langMessage === 'string') {
+    if (typeof langMessage === 'string' && context === 'default') {
       return langMessage;
     }
 
     if (typeof langMessage === 'object') {
-      return langMessage[context || 'default'];
+      return langMessage[context];
     }
   }
 
