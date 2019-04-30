@@ -7,38 +7,38 @@ const escape_quotes = require('escape-quotes');
 const plural_pattern = new RegExp('(?:([0-9]+)\\;\\s(?:plural\\=\\((.*)\\)\\;))');
 const chars = '\'\n'; // characters to escape
 
-const setTransMessage = (context, translation, id, text) => {
-  const currentTranslation = translation[id];
-
-  if (context !== '' && context !== 'default') {
+const getTransMessage = (context, text, currentTranslation) => {
+  if(context === '' || context === 'default') {
     if (typeof currentTranslation === 'object') {
-      translation[id] = {
-        ...currentTranslation,
-        [context]: text,
-      };
-    } else if (typeof currentTranslation === 'string') {
-      translation[id] = {
-        default: currentTranslation,
-        [context]: text,
-      };
-    } else {
-      translation[id] = {
-        [context]: text,
-      };
-    }
-  } else {
-    if (typeof currentTranslation === 'object') {
-      translation[id] = {
+      return {
         ...currentTranslation,
         default: text,
       };
-    } else {
-      translation[id] = text;
     }
+
+    return text;
   }
+
+  if (typeof currentTranslation === 'object') {
+    return {
+      ...currentTranslation,
+      [context]: text,
+    };
+  }
+
+  if (typeof currentTranslation === 'string') {
+    return {
+      default: currentTranslation,
+      [context]: text,
+    };
+  }
+
+  return {
+    [context]: text,
+  };
 };
 
-exports.setTransMessage = setTransMessage;
+exports.getTransMessage = getTransMessage;
 
 exports.getTrans = (file, translations, encoding) => {
   const content = fs.readFileSync(file);
@@ -52,7 +52,7 @@ exports.getTrans = (file, translations, encoding) => {
   const lang = pocontent.headers.language.replace('_', '-');
 
   // Initializing language dictionary
-  translations[lang] = {};
+  const translation = translations[lang] = {};
 
   for (const context in pocontent.translations) {
     const trans = pocontent.translations[context];
@@ -61,9 +61,14 @@ exports.getTrans = (file, translations, encoding) => {
       const value = trans[k];
 
       if (value.msgid && value.msgstr.length) {
-        setTransMessage(context, translations[lang], value.msgid, value.msgstr[0]);
+        const currentTranslation = translation[value.msgid];
+
+        translation[value.msgid] = getTransMessage(context, value.msgstr[0], currentTranslation);
+
         if (value.msgid_plural && value.msgid_plural.length) {
-          setTransMessage(context, translations[lang], value.msgid_plural, value.msgstr[1]);
+          const currentPluralTranslation = translation[value.msgid_plural];
+
+          translation[value.msgid_plural] = getTransMessage(context, value.msgstr[1], currentPluralTranslation);
         }
       }
     }

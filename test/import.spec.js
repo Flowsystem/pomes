@@ -1,5 +1,5 @@
 // Testing: import po
-import { getTrans, setTransMessage } from '../bin/import_utils';
+import { getTrans, getTransMessage } from '../bin/import_utils';
 
 describe('importing po files', () => {
   it('from po file to dict', () => {
@@ -28,44 +28,30 @@ describe('importing po files', () => {
     expect(translations.options.plural_number).toEqual('2');
   });
 
-  describe('setTransMessage', () => {
+  describe('getTransMessage', () => {
     it('set the default message when the message has been already set wit another context', () => {
-      const translation = {
-        test: {
-          'sample context': 'Test',
-        },
+      const currentTranslation = {
+        'sample context': 'Test',
       };
 
-      setTransMessage('', translation, 'test', 'Default test');
-
-      expect(translation).toEqual({
-        test: {
-          default: 'Default test',
-          'sample context': 'Test',
-        },
+      expect(getTransMessage('', 'Default test', currentTranslation)).toEqual({
+        default: 'Default test',
+        'sample context': 'Test',
       });
     });
 
     it('set a message with context', () => {
-      const translation = {};
+      const currentTranslation = undefined;
 
-      setTransMessage('Sample context', translation, 'test', 'Sample test');
-
-      expect(translation).toEqual({
-        test: {
-          'Sample context': 'Sample test',
-        },
+      expect(getTransMessage('Sample context', 'Sample test', currentTranslation)).toEqual({
+        'Sample context': 'Sample test',
       });
     });
 
     it('set the message with default context', () => {
-      const translation = {};
+      const currentTranslation = undefined;
 
-      setTransMessage('default', translation, 'test', 'Sample test');
-
-      expect(translation).toEqual({
-        test: 'Sample test',
-      });
+      expect(getTransMessage('default', 'Sample test', currentTranslation)).toEqual('Sample test');
     });
   });
 });
