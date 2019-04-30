@@ -22,11 +22,11 @@ Message.propTypes = {
 };
 
 Message.defaultProps = {
-  comment: null,
-  context: null,
+  comment: undefined,
+  context: undefined,
   future: false,
-  pluralCondition: null,
-  pluralId: null,
+  pluralCondition: undefined,
+  pluralId: undefined,
   values: {},
   component: undefined,
 };

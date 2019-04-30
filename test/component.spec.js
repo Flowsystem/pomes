@@ -28,8 +28,14 @@ const translations = {
     'YYYY-MM-DD': 'DD/MM/YYYY',
   },
   en: {
-    'una noche': 'one night',
-    '{n} noches': '{n} nights',
+    'una noche': {
+      default: 'one night',
+      'only nights': 'only one night',
+    },
+    '{n} noches': {
+      default: '{n} nights',
+      'only nights': 'only {n} nights',
+    },
   },
   'de-DE': {
     Hello: 'Hallo',
@@ -73,7 +79,7 @@ describe('component test', () => {
     );
 
     expect(withLegacySupport.text()).toEqual('Hello legacy context!');
-    expect(toJson(withLegacySupport)).toMatchSnapshot();
+    expect(withLegacySupport).toMatchSnapshot();
   });
 
   it('text without params', () => {

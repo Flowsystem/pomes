@@ -218,6 +218,43 @@ describe('getTranslateFunction', () => {
       expect(translateFunction(parameters)).toEqual(svTemplate);
     });
 
+    it('translate a message with different contexts', () => {
+      const template = 'the fall back translation of a message';
+      const translations = {
+        en: {
+          [template]: {
+            default: 'the translation of a message with default context',
+            sample: 'the translation of a message with sample context',
+          },
+        },
+      };
+
+      const translateFunction = getTranslateFunction(translations, 'en');
+
+      expect(translateFunction({
+        id: template,
+        comment: 'Foo',
+        context: 'sample',
+        component: 'div',
+        className: 'CustomClassName',
+      })).toEqual('the translation of a message with sample context');
+
+      expect(translateFunction({
+        id: template,
+        comment: 'Foo',
+        component: 'div',
+        className: 'CustomClassName',
+      })).toEqual('the translation of a message with default context');
+
+      expect(translateFunction({
+        id: template,
+        comment: 'Foo',
+        context: 'missing context',
+        component: 'div',
+        className: 'CustomClassName',
+      })).toEqual(template);
+    });
+
     it('translate based on the the fall back lang', () => {
       const template = 'the fall back translation of a message';
       const translations = {

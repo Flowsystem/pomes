@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const glob = require('glob');
+const path = require('path');
 const fs = require('fs');
 const color = require('colors');
 const optimist = require('optimist');
@@ -19,9 +20,11 @@ glob(localesPath, (err, files) => {
     getTrans(file, translations, encoding);
   });
 
-  const translationsFile = `${args.translations || 'src'}/translations.js`;
-  const content = transToTxt(translations);
+  const translationsFile = path.join(args.translations || 'src', 'translations.json');
+  const content = JSON.stringify(translations);
   const wstream = fs.createWriteStream(translationsFile);
+
   wstream.write(content);
+
   console.log(`\nDone! '${translationsFile}' generated.\n`.green);
 });

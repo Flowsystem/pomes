@@ -28,8 +28,14 @@ exports[`component test text with legacy support 1`] = `
           "Hello": "Hallo",
         },
         "en": Object {
-          "una noche": "one night",
-          "{n} noches": "{n} nights",
+          "una noche": Object {
+            "default": "one night",
+            "only nights": "only one night",
+          },
+          "{n} noches": Object {
+            "default": "{n} nights",
+            "only nights": "only {n} nights",
+          },
         },
         "es": Object {
           "Hello": "Hola",
@@ -53,8 +59,14 @@ exports[`component test text with legacy support 1`] = `
             "Hello": "Hallo",
           },
           "en": Object {
-            "una noche": "one night",
-            "{n} noches": "{n} nights",
+            "una noche": Object {
+              "default": "one night",
+              "only nights": "only one night",
+            },
+            "{n} noches": Object {
+              "default": "{n} nights",
+              "only nights": "only {n} nights",
+            },
           },
           "es": Object {
             "Hello": "Hola",

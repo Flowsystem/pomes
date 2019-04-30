@@ -1,10 +1,10 @@
-# 🍎 Pomes v0.0.8
+# 🍎 Pomes
 
 **pomes** is a simple yet powerful package to translate your *react* applications using *react-redux*.
 
 [![Build Status](https://travis-ci.org/Flowsystem/pomes.svg?branch=master)](https://travis-ci.org/Flowsystem/pomes)
 [![codecov](https://codecov.io/gh/Flowsystem/pomes/branch/master/graph/badge.svg)](https://codecov.io/gh/Flowsystem/pomes)
-[![npm version](https://badge.fury.io/js/pomes.svg)](https://www.npmjs.com/package/@oneflowab/pomes)
+[![npm version](https://badge.fury.io/js/%40oneflowab%2Fpomes.svg)](https://www.npmjs.com/package/@oneflowab/pomes)
 ![downloads](https://img.shields.io/npm/dm/@oneflowab/pomes.svg)
 
 ## Installation

@@ -115,12 +115,28 @@ const getLangMessagesAndRules = (translations, lang, fallbackLang) => ({
   pluralNumber: parseInt(getOptionValue(translations.options, 'plural_number', '2'), 10),
 });
 
-const translateTextKey = (langMessages, fallbackLangMessages, textKey, values, component, componentProps) => {
+const getMessage = (langMessages, textKey, context = 'default') => {
+  if (langMessages) {
+    const langMessage = langMessages[textKey];
+
+    if (typeof langMessage === 'string' && context === 'default') {
+      return langMessage;
+    }
+
+    if (typeof langMessage === 'object') {
+      return langMessage[context];
+    }
+  }
+
+  return undefined;
+};
+
+const translateTextKey = (langMessages, fallbackLangMessages, textKey, values, context, component, componentProps) => {
   if (!langMessages && !fallbackLangMessages) {
     return interpolateParams(textKey, values, component, componentProps);
   }
 
-  const message = langMessages ? langMessages[textKey] : undefined;
+  const message = getMessage(langMessages, textKey, context);
   if (message === undefined || message === '') {
     // If don't have literal translation and have fallback lang, try
     // to get from there.
@@ -156,7 +172,7 @@ export default (translations, lang, fallbackLang) => {
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
   return ({
-    id, values = {}, pluralId = null, pluralCondition = '', future, comment, component, ...componentProps
+    id, values = {}, pluralId = null, pluralCondition = '', future, comment, component, context, ...componentProps
   }) => {
     let textKey = id;
     if (pluralId && Function('n', `return ${pluralRule}`)(values[pluralCondition])) {
@@ -165,6 +181,6 @@ export default (translations, lang, fallbackLang) => {
     if (future) {
       return interpolateParams(textKey, values, component, componentProps);
     }
-    return translateTextKey(langMessages, fallbackLangMessages, textKey, values, component, componentProps);
+    return translateTextKey(langMessages, fallbackLangMessages, textKey, values, context, component, componentProps);
   };
 };

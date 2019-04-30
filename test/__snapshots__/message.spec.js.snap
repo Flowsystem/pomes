@@ -24,7 +24,6 @@ exports[`Message future skip translation of future plural messages 1`] = `
 >
   <Message
     comment="Foo"
-    context={null}
     future={true}
     id="You have one message"
     pluralCondition="count"
@@ -63,11 +62,8 @@ exports[`Message future skip translation of future singular messages 1`] = `
 >
   <Message
     comment="Foo"
-    context={null}
     future={true}
     id="Hello {name}"
-    pluralCondition={null}
-    pluralId={null}
     values={
       Object {
         "name": "foo",
@@ -99,7 +95,6 @@ exports[`Message plural translate plural messages 1`] = `
 >
   <Message
     comment="Foo"
-    context={null}
     future={false}
     id="You have one message"
     pluralCondition="count"
@@ -136,7 +131,6 @@ exports[`Message plural translate singular form of plural messages 1`] = `
 >
   <Message
     comment="Foo"
-    context={null}
     future={false}
     id="You have one message"
     pluralCondition="count"
@@ -166,11 +160,8 @@ exports[`Message render 1`] = `
 >
   <Message
     comment="Foo"
-    context={null}
     future={false}
     id="Hello {name}"
-    pluralCondition={null}
-    pluralId={null}
     values={
       Object {
         "name": "foo",
@@ -206,12 +197,9 @@ exports[`Message with a custom component ignores custom component when no jsx ta
     className="CustomClassName"
     comment="Foo"
     component={[Function]}
-    context={null}
     foo="bar"
     future={false}
     id="before {jsx-start}middle{jsx-end} after"
-    pluralCondition={null}
-    pluralId={null}
     values={Object {}}
   >
     före efter
@@ -243,12 +231,9 @@ exports[`Message with a custom component it accepts a custom component and varia
     className="CustomClassName"
     comment="Foo"
     component={[Function]}
-    context={null}
     foo="bar"
     future={false}
     id="Hello {name} {jsx-start}Doe{jsx-end}"
-    pluralCondition={null}
-    pluralId={null}
     values={
       Object {
         "name": "John",
@@ -261,7 +246,6 @@ exports[`Message with a custom component it accepts a custom component and varia
        
       <CustomComponent
         className="CustomClassName"
-        context={null}
         foo="bar"
       >
         <div>
@@ -297,12 +281,9 @@ exports[`Message with a custom component it accepts a custom component and wrapp
     className="CustomClassName"
     comment="Foo"
     component={[Function]}
-    context={null}
     foo="bar"
     future={false}
     id="Hello {jsx-start}{name}{jsx-end}"
-    pluralCondition={null}
-    pluralId={null}
     values={
       Object {
         "name": "Joe",
@@ -313,7 +294,6 @@ exports[`Message with a custom component it accepts a custom component and wrapp
       Olá 
       <CustomComponent
         className="CustomClassName"
-        context={null}
         foo="bar"
       >
         <div>
@@ -349,19 +329,15 @@ exports[`Message with a custom component wraps the text with the custom componen
     className="CustomClassName"
     comment="Foo"
     component={[Function]}
-    context={null}
     foo="bar"
     future={false}
     id="Hello {jsx-start}Joe{jsx-end}"
-    pluralCondition={null}
-    pluralId={null}
     values={Object {}}
   >
     <span>
       Olá 
       <CustomComponent
         className="CustomClassName"
-        context={null}
         foo="bar"
       >
         <div>
