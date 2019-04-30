@@ -9,7 +9,92 @@ Object {
 `;
 
 exports[`component test text with legacy support 1`] = `
-<div>
-  Hello legacy context!
-</div>
+<Provider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <Connect(I18nProvider)
+    legacy={true}
+    translations={
+      Object {
+        "de-DE": Object {
+          "Hello": "Hallo",
+        },
+        "en": Object {
+          "una noche": Object {
+            "default": "one night",
+            "only nights": "only one night",
+          },
+          "{n} noches": Object {
+            "default": "{n} nights",
+            "only nights": "only {n} nights",
+          },
+        },
+        "es": Object {
+          "Hello": "Hola",
+          "Hello {name}!": "Hola {name}!",
+          "YYYY-MM-DD": "DD/MM/YYYY",
+        },
+      }
+    }
+  >
+    <I18nProvider
+      dispatch={[Function]}
+      fallbackLang={null}
+      forceRefresh={false}
+      initialLang="en"
+      initialized={false}
+      lang="en"
+      legacy={true}
+      translations={
+        Object {
+          "de-DE": Object {
+            "Hello": "Hallo",
+          },
+          "en": Object {
+            "una noche": Object {
+              "default": "one night",
+              "only nights": "only one night",
+            },
+            "{n} noches": Object {
+              "default": "{n} nights",
+              "only nights": "only {n} nights",
+            },
+          },
+          "es": Object {
+            "Hello": "Hola",
+            "Hello {name}!": "Hola {name}!",
+            "YYYY-MM-DD": "DD/MM/YYYY",
+          },
+        }
+      }
+      translations_reducer={Object {}}
+      useReducer={false}
+    >
+      <LegacyContextProvider>
+        <LegacyContextConsumer
+          context={
+            Object {
+              "message": [Function],
+              "t": [Function],
+            }
+          }
+        >
+          <WithLegacyContext>
+            <div>
+              Hello legacy context!
+            </div>
+          </WithLegacyContext>
+        </LegacyContextConsumer>
+      </LegacyContextProvider>
+    </I18nProvider>
+  </Connect(I18nProvider)>
+</Provider>
 `;

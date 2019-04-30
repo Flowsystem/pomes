@@ -70,15 +70,15 @@ describe('component test', () => {
       combineReducers({ i18nState }),
       applyMiddleware(thunk),
     );
-    const withLegacySupport = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+    const withLegacySupport = mount(
       <Provider store={store}>
         <I18n translations={translations} legacy>
           <WithLegacyContext />
         </I18n>
       </Provider>,
-    ));
+    );
 
-    expect(withLegacySupport.textContent).toEqual('Hello legacy context!');
+    expect(withLegacySupport.text()).toEqual('Hello legacy context!');
     expect(withLegacySupport).toMatchSnapshot();
   });
 
