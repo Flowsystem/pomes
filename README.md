@@ -1,4 +1,4 @@
-# 🍎 Pomes v0.0.8
+# 🍎 Pomes v0.0.9
 
 **pomes** is a simple yet powerful package to translate your *react* applications using *react-redux*.
 
