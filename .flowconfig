@@ -1,0 +1,16 @@
+[ignore]
+
+[include]
+
+[libs]
+flow-typed
+src/types
+
+[lints]
+
+[options]
+module.name_mapper='component' -> '<PROJECT_ROOT>/src/component'
+module.name_mapper='getTranslateFunction' -> '<PROJECT_ROOT>/src/getTranslateFunction'
+module.name_mapper='actions' -> '<PROJECT_ROOT>/src/actions'
+
+[strict]
