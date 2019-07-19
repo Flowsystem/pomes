@@ -2,20 +2,24 @@
 
 import type { Action } from 'actions';
 
-type State = {|
+type I18nState = {|
   +lang: string,
   +translations: {},
   +forceRefresh: boolean,
 |};
 
-const reduxI18nState: State = {
+export type State = {|
+  +i18nState: I18nState,
+|};
+
+const reduxI18nState: I18nState = {
   lang: 'en',
   translations: {},
   forceRefresh: false,
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export function i18nState(state: State = reduxI18nState, action: Action): State {
+export function i18nState(state: I18nState = reduxI18nState, action: Action): I18nState {
   switch (action.type) {
     case 'REDUX_I18N_SET_LANGUAGE':
       return {

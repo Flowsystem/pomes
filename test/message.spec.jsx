@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import I18nProvider from 'component/component';
+import I18nProvider from 'components/i18n-provider/i18n-provider';
 import toJson from 'enzyme-to-json';
 
 import Message from 'components/message';

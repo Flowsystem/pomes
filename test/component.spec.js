@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import TestUtils from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 
-import I18n from 'component';
+import I18n from 'components/i18n-provider';
 import { i18nState } from 'reducer';
 import { setLanguage } from 'actions';
 import WithLocalizeHOC from './components/WithLocalizeHOC';

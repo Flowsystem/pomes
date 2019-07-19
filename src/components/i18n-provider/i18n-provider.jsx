@@ -6,17 +6,17 @@ import getTranslateFunction from 'getTranslateFunction';
 
 import I18nContext from 'contexts/i18n';
 
-type Props = {
+export type Props = {|
   translations: {},
   lang: string,
-  translationsFromRedux?: {},
+  translationsFromRedux: {},
   useReducer?: boolean,
   initialLang?: string,
   fallbackLang?: string,
   initialized?: boolean,
   children: React.Node,
   dispatch?: Function,
-}
+|}
 
 class I18nProvider extends React.PureComponent<Props> {
   static defaultProps = {
@@ -25,7 +25,6 @@ class I18nProvider extends React.PureComponent<Props> {
     fallbackLang: undefined,
     initialized: false,
     dispatch: undefined,
-    translationsFromRedux: undefined,
   }
 
   componentWillMount() {

@@ -3,3 +3,4 @@ coverage
 demo
 demoCRA
 bin
+flow-typed/**

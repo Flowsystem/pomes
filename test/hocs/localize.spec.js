@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 
 import localize from 'hocs/localize';
 
-import I18nProvider from 'component/component';
+import I18nProvider from 'components/i18n-provider/i18n-provider';
 
 import context from '../support/context';
 

@@ -8,11 +8,11 @@ flow-typed
 [lints]
 
 [options]
-module.name_mapper='component' -> '<PROJECT_ROOT>/src/component'
 module.name_mapper='components' -> '<PROJECT_ROOT>/src/components'
 module.name_mapper='contexts' -> '<PROJECT_ROOT>/src/contexts'
 module.name_mapper='hocs' -> '<PROJECT_ROOT>/src/hocs'
 module.name_mapper='getTranslateFunction' -> '<PROJECT_ROOT>/src/getTranslateFunction'
 module.name_mapper='actions' -> '<PROJECT_ROOT>/src/actions'
+module.name_mapper='reducer' -> '<PROJECT_ROOT>/src/reducer'
 
 [strict]

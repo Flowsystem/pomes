@@ -47,7 +47,6 @@ exports[`component test text with legacy support 1`] = `
   >
     <I18nProvider
       dispatch={[Function]}
-      forceRefresh={false}
       initialLang="en"
       initialized={false}
       lang="en"
