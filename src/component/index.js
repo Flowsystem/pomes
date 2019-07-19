@@ -1,18 +1,10 @@
-/*
- * Project: pomes
- * File: component/index.js
- */
-
+// @flow
 import { connect } from 'react-redux';
-import I18nProvider from './component';
-import I18nContext from './context';
 
-const I18nConsumer = I18nContext.Consumer;
+import I18nProvider from './component';
 
 export default connect(state => ({
   lang: state.i18nState.lang,
-  translations_reducer: state.i18nState.translations,
+  translationsFromRedux: state.i18nState.translations,
   forceRefresh: state.i18nState.forceRefresh,
 }))(I18nProvider);
-
-export { I18nContext, I18nConsumer };

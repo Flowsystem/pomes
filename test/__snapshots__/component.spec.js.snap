@@ -47,7 +47,6 @@ exports[`component test text with legacy support 1`] = `
   >
     <I18nProvider
       dispatch={[Function]}
-      fallbackLang={null}
       forceRefresh={false}
       initialLang="en"
       initialized={false}
@@ -75,25 +74,18 @@ exports[`component test text with legacy support 1`] = `
           },
         }
       }
-      translations_reducer={Object {}}
+      translationsFromRedux={Object {}}
       useReducer={false}
     >
-      <LegacyContextProvider>
-        <LegacyContextConsumer
-          context={
-            Object {
-              "message": [Function],
-              "t": [Function],
-            }
-          }
+      <Localized(WithLocalizeHOC)>
+        <WithLocalizeHOC
+          message={[Function]}
         >
-          <WithLegacyContext>
-            <div>
-              Hello legacy context!
-            </div>
-          </WithLegacyContext>
-        </LegacyContextConsumer>
-      </LegacyContextProvider>
+          <div>
+            Hello localized component!
+          </div>
+        </WithLocalizeHOC>
+      </Localized(WithLocalizeHOC)>
     </I18nProvider>
   </Connect(I18nProvider)>
 </Provider>

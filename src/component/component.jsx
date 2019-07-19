@@ -1,19 +1,33 @@
-/* eslint-disable camelcase,react/prop-types */
-/*
- * Project: pomes
- * File: component/component.js
- */
-
-
-import React from 'react';
-import { PropTypes } from 'prop-types';
+// @flow
+import * as React from 'react';
 
 import { setLanguage } from 'actions';
-import getTranslateFunction, { legacyGetTranslateFunction } from 'getTranslateFunction';
-import I18nContext from 'component/context';
-import LegacyContextProvider from 'component/legacyContextProvider';
+import getTranslateFunction from 'getTranslateFunction';
 
-class I18nProvider extends React.PureComponent {
+import I18nContext from 'contexts/i18n';
+
+type Props = {
+  translations: {},
+  lang: string,
+  translationsFromRedux?: {},
+  useReducer?: boolean,
+  initialLang?: string,
+  fallbackLang?: string,
+  initialized?: boolean,
+  children: React.Node,
+  dispatch?: Function,
+}
+
+class I18nProvider extends React.PureComponent<Props> {
+  static defaultProps = {
+    useReducer: false,
+    initialLang: 'en',
+    fallbackLang: undefined,
+    initialized: false,
+    dispatch: undefined,
+    translationsFromRedux: undefined,
+  }
+
   componentWillMount() {
     const {
       initialized,
@@ -31,20 +45,14 @@ class I18nProvider extends React.PureComponent {
       lang,
       fallbackLang,
       useReducer,
-      translations_reducer,
+      translationsFromRedux,
       translations,
-      legacy,
       children,
     } = this.props;
 
     const context = {
-      t: legacyGetTranslateFunction(
-        useReducer ? translations_reducer : translations,
-        lang,
-        fallbackLang,
-      ),
       message: getTranslateFunction(
-        useReducer ? translations_reducer : translations,
+        useReducer ? translationsFromRedux : translations,
         lang,
         fallbackLang,
       ),
@@ -52,37 +60,10 @@ class I18nProvider extends React.PureComponent {
 
     return (
       <I18nContext.Provider value={context}>
-        {
-          legacy ? (
-            <LegacyContextProvider>
-              {children}
-            </LegacyContextProvider>
-          ) : children
-        }
+        {children}
       </I18nContext.Provider>
     );
   }
 }
-
-I18nProvider.propTypes = {
-  translations: PropTypes.shape().isRequired,
-  lang: PropTypes.string.isRequired,
-  useReducer: PropTypes.bool,
-  initialLang: PropTypes.string,
-  fallbackLang: PropTypes.string,
-  initialized: PropTypes.bool,
-  legacy: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  dispatch: PropTypes.func,
-};
-
-I18nProvider.defaultProps = {
-  useReducer: false,
-  initialLang: 'en',
-  fallbackLang: null,
-  initialized: false,
-  legacy: false,
-  dispatch: null,
-};
 
 export default I18nProvider;

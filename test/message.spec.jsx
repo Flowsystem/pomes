@@ -1,8 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Message from 'message';
 import I18nProvider from 'component/component';
 import toJson from 'enzyme-to-json';
+
+import Message from 'components/message';
 
 describe('Message', () => {
   it('render', () => {

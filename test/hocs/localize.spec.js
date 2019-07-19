@@ -1,14 +1,17 @@
+// @flow
+
 import React from 'react';
 import { mount } from 'enzyme';
+
+import localize from 'hocs/localize';
+
 import I18nProvider from 'component/component';
 
-import localize from 'hoc';
+import context from '../support/context';
 
-import context from './support/context';
+jest.mock('contexts/i18n');
 
-jest.mock('component/context');
-
-describe('hoc test', () => {
+describe('localize test', () => {
   describe('displayName', () => {
     it('return the correct displayName', () => {
       class DisplayName extends React.Component {
@@ -27,9 +30,9 @@ describe('hoc test', () => {
         }
       }
 
-      expect(localize()(DisplayName).displayName).toEqual('Localized(DisplayName)');
-      expect(localize()(Name).displayName).toEqual('Localized(Name)');
-      expect(localize()(f => f).displayName).toEqual('Localized(Component)');
+      expect(localize(DisplayName).displayName).toEqual('Localized(DisplayName)');
+      expect(localize(Name).displayName).toEqual('Localized(Name)');
+      expect(localize(f => f).displayName).toEqual('Localized(Component)');
     });
   });
 
@@ -51,7 +54,7 @@ describe('hoc test', () => {
       }
     }
 
-    const Container = localize()(Passthrough);
+    const Container = localize(Passthrough);
 
     const treeWrapper = mount(
       <I18nProvider translations={translations} lang="en" initialLang="en" initialized>
@@ -62,50 +65,6 @@ describe('hoc test', () => {
     const stub = treeWrapper.find(Passthrough);
     expect(stub.props().foo).toEqual('bar');
     expect(stub.props().message).toEqual(expect.any(Function));
-  });
-
-  it('should allow you to set the prop name in the child component by passing an arg to localize', () => {
-    class Passthrough extends React.Component {
-      render() {
-        return <div />;
-      }
-    }
-
-    const Container = localize('messageFunc')(Passthrough);
-    const treeWrapper = mount(
-      <I18nProvider translations={translations} lang="en" initialLang="en" initialized>
-        <Container />
-      </I18nProvider>,
-    );
-    const stub = treeWrapper.find(Passthrough);
-    const singularMessage = {
-      id: 'foo {bar}',
-      values: {
-        bar: 1,
-      },
-      comment: 'Foo',
-    };
-    const pluralMessage = {
-      id: 'singular',
-      pluralId: 'plural',
-      pluralCondition: 'count',
-      values: {
-        count: 1,
-      },
-      comment: 'Foo',
-    };
-    expect(stub.props().message).toBe(undefined);
-    expect(stub.props().messageFunc).toEqual(expect.any(Function));
-
-    stub.props().messageFunc(singularMessage);
-    expect(context.message).toHaveBeenCalledTimes(1);
-    expect(context.message).toHaveBeenCalledWith(singularMessage);
-
-    context.message.mockReset();
-
-    stub.props().messageFunc(pluralMessage);
-    expect(context.message).toHaveBeenCalledTimes(1);
-    expect(context.message).toHaveBeenCalledWith(pluralMessage);
   });
 
   it('also decorate functions', () => {
@@ -126,7 +85,7 @@ describe('hoc test', () => {
         </div>
       );
     };
-    const Container = localize()(Passthrough);
+    const Container = localize(Passthrough);
 
     const treeWrapper = mount(
       <I18nProvider translations={translations} lang="en" initialLang="en" initialized>
