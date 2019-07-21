@@ -4,10 +4,12 @@
 
 [libs]
 flow-typed
+src/types
 
 [lints]
 
 [options]
+module.name_mapper='types' -> '<PROJECT_ROOT>/src/types'
 module.name_mapper='components' -> '<PROJECT_ROOT>/src/components'
 module.name_mapper='contexts' -> '<PROJECT_ROOT>/src/contexts'
 module.name_mapper='hocs' -> '<PROJECT_ROOT>/src/hocs'

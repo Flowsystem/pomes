@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import localize from 'hocs/localize';
 
-import type { MessageTranslator } from 'contexts/i18n';
+import type { MessageTranslator } from 'types';
 
 type Props = {|
   message: MessageTranslator,

@@ -14,21 +14,20 @@ jest.mock('contexts/i18n');
 describe('localize test', () => {
   describe('displayName', () => {
     it('return the correct displayName', () => {
-      class DisplayName extends React.Component {
+      type DisplayNameProps = {};
+      class DisplayName extends React.Component<DisplayNameProps> {
         displayName = 'DisplayName'
 
-        render() {
-          return <div />;
+        foo() {
+          return this.foo;
         }
-      }
-
-      class Name extends React.Component {
-        name = 'Name'
 
         render() {
           return <div />;
         }
       }
+
+      const Name = () => <div />;
 
       expect(localize(DisplayName).displayName).toEqual('Localized(DisplayName)');
       expect(localize(Name).displayName).toEqual('Localized(Name)');

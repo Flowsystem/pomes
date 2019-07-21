@@ -6,19 +6,9 @@ import getTranslateFunction from 'getTranslateFunction';
 
 import I18nContext from 'contexts/i18n';
 
-export type Props = {|
-  translations: {},
-  lang: string,
-  translationsFromRedux: {},
-  useReducer?: boolean,
-  initialLang?: string,
-  fallbackLang?: string,
-  initialized?: boolean,
-  children: React.Node,
-  dispatch?: Function,
-|}
+import type { I18nProviderProps } from 'types';
 
-class I18nProvider extends React.PureComponent<Props> {
+class I18nProvider extends React.PureComponent<I18nProviderProps> {
   static defaultProps = {
     useReducer: false,
     initialLang: 'en',

@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import I18nContext from 'contexts/i18n';
 
-import type { MessageTranslator } from 'contexts/i18n';
+import type { LocalizedComponent, ComponentToLocalize } from 'types';
 
 const getDisplayName = (WrappedComponent) => {
   const displayName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -12,18 +12,9 @@ const getDisplayName = (WrappedComponent) => {
   return `Localized(${displayName})`;
 };
 
-type InjectedProps = {|
-  message: MessageTranslator,
-|};
-
-type DecoratedProps<OriginalProps> = {|
-  ...OriginalProps,
-  ...InjectedProps,
-|};
-
 export default function localize<Props>(
-  WrappedComponent: React.AbstractComponent<DecoratedProps<Props>>,
-): React.AbstractComponent<Props> {
+  WrappedComponent: ComponentToLocalize<Props>,
+): LocalizedComponent<Props> {
   const Localized = (props: Props) => (
     <I18nContext.Consumer>
       {context => (

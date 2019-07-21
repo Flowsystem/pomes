@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const baseConfig = {
   mode: 'production',
@@ -18,6 +19,12 @@ const baseConfig = {
     modules: ['src', 'node_modules'],
   },
   externals: [nodeExternals()],
+  plugins: [
+    new CopyPlugin([
+      { from: 'src/index.js.flow', to: 'index.js.flow' },
+      { from: 'src/types.js', to: 'types.js.flow' },
+    ]),
+  ],
 };
 
 const nodeConfig = {

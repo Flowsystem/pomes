@@ -6,4 +6,3 @@ export { default } from 'components/i18n-provider';
 
 export { i18nState } from './reducer';
 export { setLanguage, setTranslations } from './actions';
-export { default as getTranslateFunction } from './getTranslateFunction';

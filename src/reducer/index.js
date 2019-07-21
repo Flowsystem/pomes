@@ -1,16 +1,6 @@
 // @flow
 
-import type { Action } from 'actions';
-
-type I18nState = {|
-  +lang: string,
-  +translations: {},
-  +forceRefresh: boolean,
-|};
-
-export type State = {|
-  +i18nState: I18nState,
-|};
+import type { I18nState, Action } from 'types';
 
 const reduxI18nState: I18nState = {
   lang: 'en',

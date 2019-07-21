@@ -4,9 +4,7 @@ import * as React from 'react';
 
 import getTranslateFunction from 'getTranslateFunction';
 
-import type { MessageProps } from 'components/message';
-
-export type MessageTranslator = (props: MessageProps) => React.Node | string;
+import type { MessageTranslator } from 'types';
 
 type Context = {|
   message: MessageTranslator,

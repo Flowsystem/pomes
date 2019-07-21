@@ -1,3 +1,4 @@
+// @flow
 /*
  * Project: pomes
  * File: getTranslateFunction.js
@@ -5,6 +6,8 @@
 /* eslint-disable no-new-func,max-len,camelcase */
 
 import React from 'react';
+
+import type { TranslateHOF } from 'types';
 
 const JSX_START = '{jsx-start}';
 const JSX_END = '{jsx-end}';
@@ -151,28 +154,21 @@ const translateTextKey = (langMessages, fallbackLangMessages, textKey, values, c
   return interpolateParams(message, values, component, componentProps);
 };
 
-export const legacyGetTranslateFunction = (translations, lang, fallbackLang) => {
-  const {
-    langMessages, fallbackLangMessages, pluralRule: plural_rule, pluralNumber: plural_number,
-  } = getLangMessagesAndRules(translations, lang, fallbackLang);
-
-  return (textKey, params = {}) => {
-    // Checking if textkey contains a pluralize object.
-    if (typeof textKey === 'object') {
-      // eslint-disable-next-line no-param-reassign
-      textKey = textKey[Number(new Function('n', `return ${plural_rule}`)(params[textKey[plural_number]]))];
-    }
-    return translateTextKey(langMessages, fallbackLangMessages, textKey, params);
-  };
-};
-
-export default (translations, lang, fallbackLang) => {
+const translateHOF: TranslateHOF = (translations, lang, fallbackLang) => {
   const {
     langMessages, fallbackLangMessages, pluralRule,
   } = getLangMessagesAndRules(translations, lang, fallbackLang);
 
   return ({
-    id, values = {}, pluralId = null, pluralCondition = '', future, comment, component, context, ...componentProps
+    id,
+    values = {},
+    pluralId = null,
+    pluralCondition = '',
+    future,
+    comment,
+    component,
+    context,
+    ...componentProps
   }) => {
     let textKey = id;
     if (pluralId && Function('n', `return ${pluralRule}`)(values[pluralCondition])) {
@@ -184,3 +180,5 @@ export default (translations, lang, fallbackLang) => {
     return translateTextKey(langMessages, fallbackLangMessages, textKey, values, context, component, componentProps);
   };
 };
+
+export default translateHOF;

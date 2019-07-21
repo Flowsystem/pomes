@@ -1,21 +1,10 @@
 // @flow
 
-type SetLanguageAction = {|
-  type: 'REDUX_I18N_SET_LANGUAGE',
-  lang: string
-|};
-
-type SetTranslationsAction = {|
-  type: 'REDUX_I18N_SET_TRANSLATIONS',
-  translations: {},
-|};
-
-type SetForceRefreshAction = {|
-  type: 'REDUX_I18N_SET_FORCE_REFRESH',
-  force: boolean,
-|};
-
-export type Action = SetLanguageAction | SetTranslationsAction | SetForceRefreshAction;
+import type {
+  SetLanguageAction,
+  SetTranslationsAction,
+  SetForceRefreshAction,
+} from 'types';
 
 export function setLanguage(lang: string): SetLanguageAction {
   return { type: 'REDUX_I18N_SET_LANGUAGE', lang };

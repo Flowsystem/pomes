@@ -1,5 +1,5 @@
 import React from 'react';
-import getTranslateFunction, { legacyGetTranslateFunction } from 'getTranslateFunction';
+import getTranslateFunction from 'getTranslateFunction';
 
 describe('getTranslateFunction', () => {
   describe('#default', () => {
@@ -374,53 +374,6 @@ describe('getTranslateFunction', () => {
         future: true,
       };
       expect(translateFunction(parameters)).toEqual(template);
-    });
-  });
-
-  describe('#legacyGetTranslateFunction', () => {
-    it('return a singular message without params', () => {
-      const template = 'a singular message';
-      const translations = {
-        sv: { [template]: 'a singular message in sv' },
-        en: { [template]: 'a singular message in en' },
-      };
-      const translateFunction = legacyGetTranslateFunction(translations, 'sv', 'en');
-
-      expect(translateFunction(template)).toEqual('a singular message in sv');
-    });
-
-    it('return a singular message with params', () => {
-      const template = 'this message has {count} translations';
-      const translations = {
-        sv: { [template]: 'this sv message has {count} translations' },
-        en: { [template]: 'this en message has {count} translations' },
-      };
-      const translateFunction = legacyGetTranslateFunction(translations, 'sv', 'en');
-
-      const params = { count: 2 };
-      expect(translateFunction(template, params)).toEqual('this sv message has 2 translations');
-    });
-
-    it('return a plural message', () => {
-      const template = [
-        'the singular form',
-        'the plural form: regarding to {count} items',
-        'count',
-      ];
-      const translations = {
-        sv: {
-          [template[0]]: 'the singular form in sv',
-          [template[1]]: 'the plural form in sv: regarding to {count} items',
-        },
-        en: {
-          [template[0]]: 'the singular form in en',
-          [template[1]]: 'the plural form in en: regarding to {count} items',
-        },
-      };
-      const translateFunction = legacyGetTranslateFunction(translations, 'sv', 'en');
-
-      const params = { count: 2 };
-      expect(translateFunction(template, params)).toEqual('the plural form in sv: regarding to 2 items');
     });
   });
 });
