@@ -1,18 +1,18 @@
 // @flow
 import * as React from 'react';
 
-type SingularMessageProps = {|
+type SingularMessageProps = {
   id: string,
   comment: string,
   context?: string,
   future?: boolean,
   values?: {},
-  component?: React.ComponentType<any>,
+  component?: string | React.ComponentType<any>,
   pluralCondition?: void,
   pluralId?: void,
-|};
+};
 
-type PluralMessageProps = {|
+type PluralMessageProps = {
   id: string,
   comment: string,
   pluralId: string,
@@ -20,21 +20,21 @@ type PluralMessageProps = {|
   values: {},
   context?: string,
   future?: boolean,
-  component?: React.ComponentType<any>,
-|};
+  component?: string | React.ComponentType<any>,
+};
 
 export type MessageProps = SingularMessageProps | PluralMessageProps;
 
-export type MessageTranslator = (props: MessageProps) => string;
+export type MessageTranslator = (props: MessageProps) => string | React.Node;
 
-type InjectedProps = {|
+type InjectedProps = {
   message: MessageTranslator,
-|};
+};
 
-type DecoratedProps<OriginalProps> = {|
-  ...$Exact<OriginalProps>,
+type DecoratedProps<OriginalProps> = {
+  ...OriginalProps,
   ...InjectedProps,
-|};
+};
 
 export type LocalizedComponent<Props> = React.AbstractComponent<Props>;
 

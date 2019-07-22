@@ -21,7 +21,7 @@ declare export var Message: React.ComponentType<MessageProps>
 
 declare export function localize<Props>(ComponentToLocalize<Props>): LocalizedComponent<Props>
 
-declare export var I18nProvider: React.Component<I18nProviderOwnProps>;
+declare export var I18nProvider: React.Component<I18nProviderOwnProps>
 
 declare export function i18nState(state: I18nState, action: Action): I18nState
 
