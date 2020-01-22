@@ -17,7 +17,9 @@ class I18nProvider extends React.PureComponent<I18nProviderProps> {
     dispatch: undefined,
   }
 
-  componentWillMount() {
+  constructor(props: I18nProviderProps) {
+    super(props);
+
     const {
       initialized,
       dispatch,
