@@ -27,18 +27,23 @@ export type MessageProps = SingularMessageProps | PluralMessageProps;
 
 export type MessageTranslator = (props: MessageProps) => string | React.Node;
 
-type InjectedProps = {
+type InjectedProps = {|
   message: MessageTranslator,
-};
+|};
 
-type DecoratedProps<OriginalProps> = {
+type DecoratedProps<OriginalProps> = {|
   ...OriginalProps,
   ...InjectedProps,
+|};
+
+type LocalizedComponent<Props> = React.AbstractComponent<$Rest<$Exact<Props>, InjectedProps>>;
+
+type ComponentToLocalize<Props> = React.AbstractComponent<DecoratedProps<$Exact<Props>>>;
+
+export type {
+  LocalizedComponent,
+  ComponentToLocalize,
 };
-
-export type LocalizedComponent<Props> = React.AbstractComponent<Props>;
-
-export type ComponentToLocalize<Props> = React.AbstractComponent<DecoratedProps<Props>>;
 
 export type Localize<Props> = (ComponentToLocalize<Props>) => LocalizedComponent<Props>;
 
