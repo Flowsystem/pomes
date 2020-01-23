@@ -1,17 +1,24 @@
-/*
- * Project: pomes
- * File: actions.js
- */
+// @flow
 
-export function setLanguage(lang) {
+import type {
+  SetLanguageAction,
+  SetTranslationsAction,
+  SetForceRefreshAction,
+} from 'types';
+
+export function setLanguage(lang: string): SetLanguageAction {
   return { type: 'REDUX_I18N_SET_LANGUAGE', lang };
 }
 
-function updateTranslations(translations) {
+function updateTranslations(translations: {}): SetTranslationsAction {
   return { type: 'REDUX_I18N_SET_TRANSLATIONS', translations };
 }
 
-export function setTranslations(translations, languageOrOptions) {
+export function setForceRefresh(force: boolean): SetForceRefreshAction {
+  return { type: 'REDUX_I18N_SET_FORCE_REFRESH', force };
+}
+
+export function setTranslations(translations: {}, languageOrOptions) {
   return function (dispatch, getState) {
     const options = typeof languageOrOptions === 'string'
       ? { language: languageOrOptions }
@@ -46,8 +53,4 @@ export function setTranslations(translations, languageOrOptions) {
     );
     dispatch(setForceRefresh(true));
   };
-}
-
-export function setForceRefresh(force) {
-  return { type: 'REDUX_I18N_SET_FORCE_REFRESH', force };
 }

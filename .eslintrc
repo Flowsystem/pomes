@@ -8,10 +8,12 @@
     "jest": true
   },
   "plugins": [
-    "react"
+    "react",
+    "flowtype"
   ],
   "extends": [
-    "airbnb"
+    "airbnb",
+    "plugin:flowtype/recommended"
   ],
   "settings": {
     "import/resolver": {
@@ -24,5 +26,17 @@
         }
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.js", "*.spec.jsx"],
+      "settings": {
+        "import/resolver": {
+          "jest": {
+            "jestConfigFile": "jest.config.js"
+          }
+        }
+      }
+    }
+  ]
 }

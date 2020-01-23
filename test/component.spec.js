@@ -5,21 +5,19 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import TestUtils from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
-import toJson from 'enzyme-to-json';
 
-import I18n from 'component';
+import I18n from 'components/i18n-provider';
 import { i18nState } from 'reducer';
 import { setLanguage } from 'actions';
-import WithLegacyContext from './components/WithLegacyContext';
+import WithLocalizeHOC from './components/WithLocalizeHOC';
 import TransWithoutParams from './components/TransWithoutParams';
 import TransWithParams from './components/TransWithParams';
 import TransWithDollarSignParams from './components/TransWithDollarSignParams';
 import TransWithNumberParams from './components/TransWithNumberParams';
 import TransWithJunkParams from './components/TransWithJunkParams';
-import Dates from './components/Dates';
 import { TransPluralize1, TransPluralize2 } from './components/TransPlurals';
 import TransWithObjParams from './components/TransWithObjParams';
-import { TransFormPluralize1, TransFormPluralize2 } from './components/TransFormPlurals';
+import { TransFormPluralize1 } from './components/TransFormPlurals';
 
 const translations = {
   es: {
@@ -73,12 +71,12 @@ describe('component test', () => {
     const withLegacySupport = mount(
       <Provider store={store}>
         <I18n translations={translations} legacy>
-          <WithLegacyContext />
+          <WithLocalizeHOC />
         </I18n>
       </Provider>,
     );
 
-    expect(withLegacySupport.text()).toEqual('Hello legacy context!');
+    expect(withLegacySupport.text()).toEqual('Hello localized component!');
     expect(withLegacySupport).toMatchSnapshot();
   });
 
@@ -194,25 +192,6 @@ describe('component test', () => {
     expect(withParamsNode.textContent).toEqual('Hola Francesc!');
   });
 
-  it('date format', () => {
-    const store = createStore(
-      combineReducers({ i18nState }),
-      applyMiddleware(thunk),
-    );
-    const dates = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={store}>
-        <I18n translations={translations}>
-          <Dates />
-        </I18n>
-      </Provider>,
-    ));
-
-    store.dispatch(setLanguage('en'));
-    expect(dates.textContent).toEqual('2016-01-01');
-    store.dispatch(setLanguage('es'));
-    expect(dates.textContent).toEqual('01/01/2016');
-  });
-
   it('pluralize', () => {
     const store = createStore(
       combineReducers({ i18nState }),
@@ -271,56 +250,56 @@ describe('component test', () => {
       </Provider>,
     ));
 
-    const pluralizeform4 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={store}>
-        <I18n translations={translations3}>
-          <TransFormPluralize2 n={0} />
-        </I18n>
-      </Provider>,
-    ));
+    // const pluralizeform4 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+    //   <Provider store={store}>
+    //     <I18n translations={translations3}>
+    //       <TransFormPluralize2 n={0} />
+    //     </I18n>
+    //   </Provider>,
+    // ));
 
-    const pluralizeform5 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={store}>
-        <I18n translations={translations3}>
-          <TransFormPluralize2 n={1} />
-        </I18n>
-      </Provider>,
-    ));
+    // const pluralizeform5 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+    //   <Provider store={store}>
+    //     <I18n translations={translations3}>
+    //       <TransFormPluralize2 n={1} />
+    //     </I18n>
+    //   </Provider>,
+    // ));
 
-    const pluralizeform6 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={store}>
-        <I18n translations={translations3}>
-          <TransFormPluralize2 n={2} />
-        </I18n>
-      </Provider>,
-    ));
+    // const pluralizeform6 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+    //   <Provider store={store}>
+    //     <I18n translations={translations3}>
+    //       <TransFormPluralize2 n={2} />
+    //     </I18n>
+    //   </Provider>,
+    // ));
 
-    const pluralizeform7 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={store}>
-        <I18n translations={translations3}>
-          <TransFormPluralize2 n={3} />
-        </I18n>
-      </Provider>,
-    ));
+    // const pluralizeform7 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+    //   <Provider store={store}>
+    //     <I18n translations={translations3}>
+    //       <TransFormPluralize2 n={3} />
+    //     </I18n>
+    //   </Provider>,
+    // ));
 
-    const pluralizeform8 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
-      <Provider store={store}>
-        <I18n translations={translations3}>
-          <TransFormPluralize2 n={4} />
-        </I18n>
-      </Provider>,
-    ));
+    // const pluralizeform8 = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+    //   <Provider store={store}>
+    //     <I18n translations={translations3}>
+    //       <TransFormPluralize2 n={4} />
+    //     </I18n>
+    //   </Provider>,
+    // ));
 
     store.dispatch(setLanguage('es'));
     expect(pluralizeform1.textContent).toEqual('0 banane');
     expect(pluralizeform2.textContent).toEqual('1 banane');
     expect(pluralizeform3.textContent).toEqual('2 bananes');
 
-    expect(pluralizeform4.textContent).toEqual('plural 3/0');
-    expect(pluralizeform5.textContent).toEqual('plural 1/1');
-    expect(pluralizeform6.textContent).toEqual('plural 2/2');
-    expect(pluralizeform7.textContent).toEqual('plural 2/3');
-    expect(pluralizeform8.textContent).toEqual('plural 2/4');
+    // expect(pluralizeform4.textContent).toEqual('plural 3/0');
+    // expect(pluralizeform5.textContent).toEqual('plural 1/1');
+    // expect(pluralizeform6.textContent).toEqual('plural 2/2');
+    // expect(pluralizeform7.textContent).toEqual('plural 2/3');
+    // expect(pluralizeform8.textContent).toEqual('plural 2/4');
   });
 
   it('de-DE', () => {

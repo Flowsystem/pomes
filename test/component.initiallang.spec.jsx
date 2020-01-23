@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -7,41 +6,39 @@ import { Provider } from 'react-redux';
 
 import I18n from 'components/i18n-provider';
 import { i18nState } from 'reducer';
-import { setLanguage } from 'actions';
 
 import TransWithoutParams from './components/TransWithoutParams';
 
 const translations = {
   es: {
     Hello: 'Hola',
+    'Hello {name}!': 'Hola {name}!',
+    'YYYY-MM-DD': 'DD/MM/YYYY',
   },
   en: {
+    'una noche': 'one night',
+    '{n} noches': '{n} nights',
   },
-  de: {
+  'de-DE': {
     Hello: 'Hallo',
   },
 };
 
-describe('fallback language', () => {
+describe('initial language', () => {
   it('checking language', () => {
     const store = createStore(
       combineReducers({ i18nState }),
       applyMiddleware(thunk),
     );
 
-    const component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+    TestUtils.renderIntoDocument(
       <Provider store={store}>
-        <I18n translations={translations} fallbackLang="de" initialLang="en">
+        <I18n translations={translations} initialLang="es">
           <TransWithoutParams />
         </I18n>
       </Provider>,
-    ));
+    );
 
-    expect(store.getState().i18nState.lang).toEqual('en');
-    expect(component.textContent).toEqual('Hallo');
-    store.dispatch(setLanguage('es'));
-    expect(component.textContent).toEqual('Hola');
-    store.dispatch(setLanguage('fr'));
-    expect(component.textContent).toEqual('Hallo');
+    expect(store.getState().i18nState.lang).toEqual('es');
   });
 });
