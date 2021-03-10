@@ -20,10 +20,12 @@ const baseConfig = {
   },
   externals: [nodeExternals()],
   plugins: [
-    new CopyPlugin([
-      { from: 'src/index.js.flow', to: 'index.js.flow' },
-      { from: 'src/types.js', to: 'types.js.flow' },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        { from: 'src/index.js.flow', to: 'index.js.flow' },
+        { from: 'src/types.js', to: 'types.js.flow' },
+      ],
+    }),
   ],
 };
 

@@ -8,7 +8,7 @@ import type { MessageProps } from 'types';
 
 const Message = (props: MessageProps) => (
   <I18nContext.Consumer>
-    {context => context.message(props)}
+    {(context) => context.message(props)}
   </I18nContext.Consumer>
 );
 

@@ -134,7 +134,7 @@ describe('translations in reducer', () => {
         applyMiddleware(thunk),
       );
 
-      const component = ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
+      ReactDOM.findDOMNode(TestUtils.renderIntoDocument(
         <Provider store={store}>
           <I18n translations={{}} useReducer>
             <TransWithoutParams />

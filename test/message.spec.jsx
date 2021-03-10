@@ -1,3 +1,6 @@
+// @flow
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import { mount } from 'enzyme';
 import I18nProvider from 'components/i18n-provider/i18n-provider';
