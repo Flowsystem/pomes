@@ -75,9 +75,19 @@ export type State = {
 };
 
 export type I18nProviderProps = {|
-  translations: {},
+  translations: {
+    options?: {
+      plural_rule: string,
+      plural_number: string,
+    },
+  },
   lang: string,
-  translationsFromRedux: {},
+  translationsFromRedux?: {
+    options?: {
+      plural_rule: string,
+      plural_number: string,
+    },
+  },
   useReducer?: boolean,
   initialLang?: string,
   fallbackLang?: string,
@@ -100,11 +110,15 @@ export type MapStateToProps = (
   ownProps: I18nProviderOwnProps
 ) => I18nProviderPropsMSProps;
 
-
 export type TranslateHOF = (
-  translations: {},
+  translations: {
+    options?: {
+      plural_rule: string,
+      plural_number: string,
+    },
+  },
   lang: string,
-  fallbackLang: string
+  fallbackLang?: string
 ) => (
   message: MessageProps,
 ) => React.Node | string;
