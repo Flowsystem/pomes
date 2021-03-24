@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable max-classes-per-file, react/prop-types */
 
 import React from 'react';
 import { mount } from 'enzyme';
@@ -47,11 +48,7 @@ describe('localize test', () => {
   };
 
   it('should pass translation props to the given component', () => {
-    class Passthrough extends React.Component {
-      render() {
-        return <div />;
-      }
-    }
+    const Passthrough = () => <div />;
 
     const Container = localize(Passthrough);
 

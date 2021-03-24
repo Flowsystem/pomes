@@ -85,7 +85,7 @@ const interpolateParams = (rawText, rawParams, component, componentProps) => {
 
   // if any children are objects (i.e. react components), wrap in a span, otherwise return as string
   // ignore anything that is falsy, bypassing null, etc
-  return children.some(child => child && typeof child === 'object')
+  return children.some((child) => child && typeof child === 'object')
     // When React 16 is released, change the span to an identity function for array children,
     // removing the extra dom node
     ? React.createElement('span', null, ...children)
@@ -171,6 +171,7 @@ const translateHOF: TranslateHOF = (translations, lang, fallbackLang) => {
     ...componentProps
   }) => {
     let textKey = id;
+    // $FlowFixMe
     if (pluralId && Function('n', `return ${pluralRule}`)(values[pluralCondition])) {
       textKey = pluralId;
     }

@@ -20,10 +20,12 @@ const baseConfig = {
   },
   externals: [nodeExternals()],
   plugins: [
-    new CopyPlugin([
-      { from: 'src/index.js.flow', to: 'index.js.flow' },
-      { from: 'src/types.js', to: 'types.js.flow' },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        { from: 'src/index.js.flow', to: 'index.js.flow' },
+        { from: 'src/types.js', to: 'types.js.flow' },
+      ],
+    }),
   ],
 };
 
@@ -33,8 +35,9 @@ const nodeConfig = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'pomes',
-    libraryTarget: 'commonjs2',
+    library: {
+      type: 'commonjs2',
+    },
   },
 };
 
@@ -44,8 +47,10 @@ const webConfig = {
   output: {
     filename: 'index.umd.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'pomes',
-    libraryTarget: 'umd',
+    library: {
+      name: 'pomes',
+      type: 'umd',
+    },
   },
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
@@ -119,7 +120,7 @@ module.exports = {
   // setupFiles: [],
 
   // The path to a module that runs some code to configure or set up the testing framework before each test
-  setupTestFrameworkScriptFile: '<rootDir>/test/setup.js',
+  setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   snapshotSerializers: [

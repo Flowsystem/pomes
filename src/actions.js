@@ -18,9 +18,9 @@ export function setForceRefresh(force: boolean): SetForceRefreshAction {
   return { type: 'REDUX_I18N_SET_FORCE_REFRESH', force };
 }
 
-export function setTranslations(translations: {}, languageOrOptions) {
-  return function (dispatch, getState) {
-    const options = typeof languageOrOptions === 'string'
+export function setTranslations(translations: {}, languageOrOptions: any) {
+  return (dispatch: Function, getState: Function) => {
+    const options: any = typeof languageOrOptions === 'string'
       ? { language: languageOrOptions }
       : languageOrOptions || {};
     const { language, preserveExisting } = options;

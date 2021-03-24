@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "env": {
     "browser": true,
     "node": true,
@@ -32,11 +32,25 @@
       "files": ["*.spec.js", "*.spec.jsx"],
       "settings": {
         "import/resolver": {
+          "webpack": {
+            "config": {
+              "resolve": {
+                "modules": ["src", "node_modules"],
+                "extensions": [".js", ".jsx"]
+              }
+            }
+          },
           "jest": {
             "jestConfigFile": "jest.config.js"
           }
         }
       }
     }
-  ]
+  ],
+  "rules": {
+    "react/static-property-placement": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/no-find-dom-node": "off",
+    "arrow-parens": "off"
+  }
 }

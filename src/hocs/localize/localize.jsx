@@ -17,7 +17,7 @@ export default function localize<Props>(
 ): LocalizedComponent<Props> {
   const Localized = (props: Props) => (
     <I18nContext.Consumer>
-      {context => (
+      {(context) => (
         <WrappedComponent
           {...props}
           message={context.message}

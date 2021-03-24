@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import getTranslateFunction from 'getTranslateFunction';
 
@@ -124,7 +125,7 @@ describe('getTranslateFunction', () => {
 
       const CustomComponent = ({ children }) => (
         <p>
-        a Custom Component to be used in a translated message:
+          a Custom Component to be used in a translated message:
           {children}
         </p>
       );
@@ -148,7 +149,7 @@ describe('getTranslateFunction', () => {
 
       const CustomComponent = ({ children }) => (
         <p>
-        a Custom Component to be used in a translated message:
+          a Custom Component to be used in a translated message:
           {children}
         </p>
       );
