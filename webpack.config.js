@@ -2,6 +2,16 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const CopyPlugin = require('copy-webpack-plugin');
 
+const environment = {
+  arrowFunction: false,
+  bigIntLiteral: false,
+  const: false,
+  destructuring: false,
+  dynamicImport: false,
+  forOf: false,
+  module: false,
+};
+
 const baseConfig = {
   mode: 'production',
   entry: './src/index.js',
@@ -38,6 +48,7 @@ const nodeConfig = {
     library: {
       type: 'commonjs2',
     },
+    environment,
   },
 };
 
@@ -51,6 +62,7 @@ const webConfig = {
       name: 'pomes',
       type: 'umd',
     },
+    environment,
   },
 };
 
